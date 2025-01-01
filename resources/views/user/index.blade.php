@@ -47,6 +47,11 @@
             <i class="mdi mdi-view-quilt menu-icon"></i>
             <span class="menu-title">Dashboard</span>
         </a>
+        <a class="nav-link"  href="{{ route('user.tambahsop') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Administrasi</span>
+        </a>
+       
     </li>
 @endif
 
@@ -248,11 +253,7 @@
                       
                       
                   <!-- index.blade.php -->
-                  <div class="float-right mb-3 table-actions">
-                    <a href="{{ route('user.tambahsop') }}" class="btn btn-custom-color btn-sm">
-                      <i class="mdi mdi-plus-circle-outline"></i> Tambah SOP
-                  </a>
-                  </div>
+                
 <h1>Daftar Dokumen</h1>
 <br>
 <table class="table table-bordered">
