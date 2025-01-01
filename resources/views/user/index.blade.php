@@ -51,7 +51,18 @@
             <i class="mdi mdi-view-quilt menu-icon"></i>
             <span class="menu-title">Administrasi</span>
         </a>
-       
+          <a class="nav-link"  href="{{ route('user.pemilihankegiatan') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Pemilihan Kegiatan</span>
+        </a>
+          <a class="nav-link"  href="{{ route('user.matakuliah') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Mata Kuliah Ekivalensi</span>
+        </a>
+        <a class="nav-link"  href="{{ route('user.status') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Status</span>
+        </a>
     </li>
 @endif
 
@@ -216,7 +227,7 @@
               <div class="card text-white bg-success" style="background-image: url('{{ asset('img/hijau.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
                   <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
                       <h5 class="card-title" style="margin: 0;">Approved</h5>
-                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">2</span>
+                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $approvedCount }}</span>
                   </div>
               </div>
           </div>
@@ -225,7 +236,7 @@
             <div class="card text-white bg-warning" style="background-image: url('{{ asset('img/kuning.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
                 <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
                     <h5 class="card-title" style="margin: 0;">Waiting</h5>
-                    <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">1</span>
+                    <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $waitingCount }}</span>
                 </div>
             </div>
         </div>
@@ -234,7 +245,7 @@
           <div class="card text-white bg-danger" style="background-image: url('{{ asset('img/merah.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
               <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
                   <h5 class="card-title" style="margin: 0;">Rejected</h5>
-                  <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">2</span>
+                  <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $rejectedCount }}</span>
               </div>
           </div>
       </div>
@@ -254,44 +265,57 @@
                       
                   <!-- index.blade.php -->
                 
-<h1>Daftar Dokumen</h1>
-<br>
 <table class="table table-bordered">
   <thead>
       <tr>
-        <th>Nama SOP</th>
-        <th>Klasifikasi Dokumen</th>
-        <th>Nomor Dokumen</th>
-        <th>Persetujuan Sekretaris</th>
-        <th>Persetujuan Manajemen Representative</th>
-        <th>Status Pengesahan Direktur</th>
+        <th>No</th>
+        <th>Jenis Kegiatan</th>
+        <th>Date</th>
         <th>Status</th>
-        <th>Dokumen PDF</th>
         <th>Aksi</th>
     </tr>
 </thead>
 <tbody>
-    @foreach ($sop as $sops)
-        <tr>
-            <td>{{ $sops->nama }}</td>
-            <td>{{ $sops->klasifikasi_dokumen }}</td>
-            <td>{{ $sops->nomor_dokumen }}</td>
-            <td>{{ $sops->persetujuan_sekretaris }}</td>
-            <td>{{ $sops->persetujuan_mr }}</td>
-            <td>{{ $sops->status_pengesahan_direktur }}</td>
-            <td>{{ $sops->status }}</td>
-            <td>{{ $sops->file }}</td>
-                    <td>
-                        <a href="{{ route('sop.show', $sops->id) }}"  class="btn btn-warning btn-xs">
-                            Lihat PDF</i> 
-                        </a>
-                  </td>
-                </tr>
-            @endforeach
-        </tbody>
-    </table>
+     @foreach ($administrasiData as $index => $administrasi)
+   
+            <tr>
+                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
+                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                <td>{{ $administrasi->created_at }}</td>
+                <td>{{ $administrasi->status }}</td> <!-- Status -->
+                <td>
+                    <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
+                        Detail
+                    </a>
+                </td>
+            </tr>
+            <tr> 
+                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
+                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                 <td>{{ $administrasi->created_at }}</td>
+                <td>{{ $administrasi->status2 }}</td> <!-- Status -->
+                <td>
+                    <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
+                        Detail
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
+                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                 <td>{{ $administrasi->created_at }}</td>
+                <td>{{ $administrasi->status3 }}</td> <!-- Status -->
+                <td>
+                    <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
+                        Detail
+                    </a>
+                </td>
+            </tr>
+              
+        @endforeach
 
-
+</tbody>
+</table>
                       </div>
                     </div>
                   </div>
