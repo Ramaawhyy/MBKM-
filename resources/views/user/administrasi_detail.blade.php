@@ -2,6 +2,7 @@
 
 @section('content')
 <div class="container">
+     <h3> Doc {{ $administrasi->user->nim }}</h3>
     <h2>Detail Administrasi</h2>
     <table class="table">
        

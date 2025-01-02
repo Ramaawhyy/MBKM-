@@ -16,6 +16,16 @@
   <link rel="stylesheet" href="../template/css/style.css">
   <!-- endinject -->
   <link rel="shortcut icon" href="../template/images/favicon.png" />
+  <style>
+    /* Tambahkan ini di file CSS Anda atau di dalam tag <style> di bagian <head> */
+.hidden {
+    display: none !important;
+    /* Tambahan opsional untuk transisi halus */
+    transition: opacity 0.3s ease;
+    opacity: 0;
+}
+
+  </style>
 </head>
 <body>
   <div class="container-scroller d-flex">
@@ -27,21 +37,34 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <ul class="nav">
         <li class="nav-item sidebar-category">
-         
-        
-            <img src="../template/images/download-removebg-preview.png" alt="Image" class="img-fluid right-align" >
-       
-          
+          <!-- Gambar yang akan disembunyikan -->
+          <img id="sidebarImage" src="../template/images/download-removebg-preview.png" alt="Image" class="img-fluid right-align">
           <span></span>
         </li>
-        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'sekretaris'|| Auth::user()->role == 'user')
-        <li class="nav-item">
-            <a class="nav-link" href="{{ route('sekretaris') }}">
-                <i class="mdi mdi-view-quilt menu-icon"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
-        </li>
-    @endif
+        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('dosen') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">History</span>
+        </a>
+        <a class="nav-link"  href="{{ route('approveadmin') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Approval Administrasi</span>
+        </a>
+          <a class="nav-link"  href="{{ route('approvekegiatan') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Approval Pemilihan Kegiatan</span>
+        </a>
+          <a class="nav-link"  href="{{ route('approvematkul') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Approval Mata Kuliah Ekivalensi</span>
+        </a>
+        <a class="nav-link"  href="{{ route('user.status') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Status</span>
+        </a>
+    </li>
+@endif
 
         
         
@@ -67,8 +90,8 @@
                 @if(Auth::user()->role == 'superadm')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Direktur</h4>
                 @endif
-                @if(Auth::user()->role == 'sekretaris')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Sekretaris</h4>
+                @if(Auth::user()->role == 'dosen')
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Dosen</h4>
                 @endif
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item">
@@ -170,13 +193,6 @@
           <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
             <span class="mdi mdi-menu"></span>
           </button>
-        </div>
-        <div class="navbar-menu-wrapper navbar-search-wrapper d-none d-lg-flex align-items-center">
-          <ul class="navbar-nav mr-lg-2">
-            <li class="nav-item nav-search d-none d-lg-block">
-              
-            </li>
-          </ul>
           <ul class="navbar-nav navbar-nav-right">
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
@@ -189,8 +205,8 @@
                 @if(Auth::user()->role == 'superadm')
                 <span class="nav-profile-name">Direktur</span>
                 @endif
-                @if(Auth::user()->role == 'sekretaris')
-                <span class="nav-profile-name">Sekretaris</span>
+                @if(Auth::user()->role == 'dosen')
+                <span class="nav-profile-name">Dosen</span>
                 @endif
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
@@ -199,29 +215,47 @@
                   Logout
                 </a>
               </div>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link icon-link">
-           
-              </a>
-            </li>
-            <li class="nav-item">
-              <a href="#" class="nav-link icon-link">
-           
-              </a>
-            </li>
-          </ul>
         </div>
+       
       </nav>
+      
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">
+          <div class="row">
+            <div class="col-md-4 grid-margin">
+              <div class="card text-white bg-success" style="background-image: url('{{ asset('img/hijau.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                      <h5 class="card-title" style="margin: 0;">Approved</h5>
+                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $approvedCount }}</span>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="col-md-4 grid-margin">
+            <div class="card text-white bg-warning" style="background-image: url('{{ asset('img/kuning.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+                <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h5 class="card-title" style="margin: 0;">Waiting</h5>
+                    <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $waitingCount }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 grid-margin">
+          <div class="card text-white bg-danger" style="background-image: url('{{ asset('img/merah.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+              <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                  <h5 class="card-title" style="margin: 0;">Rejected</h5>
+                  <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $rejectedCount }}</span>
+              </div>
+          </div>
+      </div>
+        </div>
           <div class="row">
                   <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
                       @yield('content')
-                      @if(Auth::user()->role == 'sekretaris'|| Auth::user()->role == 'admin')
+                      @if(Auth::user()->role == 'dosen')
                       <div class="table-responsive pt-3">
                       
                        
@@ -230,52 +264,58 @@
                       
                       
                   <!-- index.blade.php -->
-                  
-<h1>Daftar Dokumen</h1>
-<br>
-
+                
 <table class="table table-bordered">
   <thead>
       <tr>
-          <th>Nama SOP</th>
-          <th>klasifikasi Dokumen</th>
-          <th>Nomor Dokumen</th>
-          <th>Persetujuan Sekretaris</th>
-          <th>Status</th>
-          <th>Dokumen PDF</th>
-          <th>Aksi</th>
-      </tr>
-  </thead>
-  <tbody>
-      @forelse ($sop as $sops)
-          <tr>
-              <td>{{ $sops->nama }}</td>
-              <td>{{ $sops->klasifikasi_dokumen }}</td>
-              <td>{{ $sops->nomor_dokumen }}</td>
-              <td>{{ $sops->persetujuan_sekretaris }}</td>
-              <td>{{ $sops->status }}</td>
-              <td>{{ $sops->file }}</td>
-              <td>
-                  <a href="{{ route('sop.show', $sops->id) }}"  class="btn btn-warning btn-xs">
-                    Lihat PDF</i> 
-                </a>
-                <a href="{{ route('sekretaris.sop.edit', $sops->id) }}" class="btn btn-warning btn-xs">Edit</a>
-                  <form action="{{ route('sop.delete', $sops->id) }}" method="post" style="display: inline;">
-                      @csrf
-                      @method('DELETE')
-                      <button type="submit" class="btn btn-danger btn-xs" onclick="return confirm('Apakah Anda yakin ingin menghapus SOP ini?')">Hapus</button>
-                  </form>
-              </td>
-          </tr>
-      @empty
-          <tr>
-              <td colspan="3">Tidak ada SOP.</td>
-          </tr>
-      @endforelse
-  </tbody>
+        <th>No</th>
+        <th>Jenis Kegiatan</th>
+        <th>Date</th>
+        <th>Status</th>
+        <th>Aksi</th>
+    </tr>
+</thead>
+<tbody>
+     @foreach ($administrasiData as $index => $administrasi)
+   
+            <tr>
+                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
+                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                <td>{{ $administrasi->created_at }}</td>
+                <td>{{ $administrasi->status }}</td> <!-- Status -->
+                <td>
+                    <a href="{{ route('dosen.detail4', $administrasi->id) }}" class="btn btn-info">Detail </a>
+                 
+                    </a>
+                </td>
+            </tr>
+            <tr> 
+                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
+                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                 <td>{{ $administrasi->created_at }}</td>
+                <td>{{ $administrasi->status2 }}</td> <!-- Status -->
+                <td>
+                   <a href="{{ route('dosen.detail4', $administrasi->id) }}" class="btn btn-info">Detail </a>
+            
+                    </a>
+                </td>
+            </tr>
+            <tr>
+                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
+                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                 <td>{{ $administrasi->created_at }}</td>
+                <td>{{ $administrasi->status3 }}</td> <!-- Status -->
+                <td>
+                    <a href="{{ route('dosen.detail4', $administrasi->id) }}" class="btn btn-info">Detail </a>
+                  
+                    </a>
+                </td>
+            </tr>
+              
+        @endforeach
+
+</tbody>
 </table>
-
-
                       </div>
                     </div>
                   </div>
@@ -303,7 +343,20 @@
     <!-- page-body-wrapper ends -->
   </div>
   <!-- container-scroller -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      // Tombol menu
+      const menuButton = document.getElementById("menuButton");
+      // Gambar yang akan di-hide
+      const sidebarImage = document.getElementById("sidebarImage");
 
+      menuButton.addEventListener("click", function () {
+        // Tambahkan atau hapus kelas 'hidden'
+        sidebarImage.classList.toggle("hidden");
+      });
+    });
+  </script>
+  
   <!-- base:js -->
   <script src="../template/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->

@@ -24,7 +24,7 @@ class SesiController extends Controller
         $sop = sop::all();
         return view('user.index', compact('sop'));
     }
-    
+
     public function login(Request $request)
     {
         $request->validate([
@@ -47,9 +47,10 @@ class SesiController extends Controller
                 return redirect('index/user');
             } elseif (Auth::user()->role == 'superadm') { // Corrected elseif condition
                 return redirect('index/direktur');
-            }
-            elseif (Auth::user()->role == 'sekretaris') { // Corrected elseif condition
+            } elseif (Auth::user()->role == 'sekretaris') { // Corrected elseif condition
                 return redirect('index/sekretaris');
+            } elseif (Auth::user()->role == 'dosen') { // Corrected elseif condition
+                return redirect('index/dosen');
             }
         } else {
             return redirect('')->withErrors('Username dan Password Yang dimasukan tidak sesuai')->withInput();

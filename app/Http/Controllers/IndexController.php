@@ -35,7 +35,8 @@ class IndexController extends Controller
 
         // Count each status occurrence
         foreach ($administrasiRecords as $administrasi) {
-            if ($administrasi->status === 'approved'
+            if (
+                $administrasi->status === 'approved'
             ) $approvedCount++;
             if ($administrasi->status2 === 'approved') $approvedCount++;
             if ($administrasi->status3 === 'approved') $approvedCount++;
@@ -192,11 +193,154 @@ class IndexController extends Controller
 
 
 
-    public function sekretaris()
+    public function dosen()
     {
-        $sop = sop::all();
-        return view('sekretaris.index', compact('sop'));
+        // Initialize counters
+        $approvedCount = 0;
+        $waitingCount = 0;
+        $rejectedCount = 0;
+
+        // Retrieve all administrasi records
+        $administrasiRecords = Administrasi::all();
+
+        // Count each status occurrence
+        foreach ($administrasiRecords as $administrasi) {
+            if ($administrasi->status === 'approved') $approvedCount++;
+            if ($administrasi->status2 === 'approved') $approvedCount++;
+            if ($administrasi->status3 === 'approved') $approvedCount++;
+
+            if ($administrasi->status === 'waiting') $waitingCount++;
+            if ($administrasi->status2 === 'waiting') $waitingCount++;
+            if ($administrasi->status3 === 'waiting') $waitingCount++;
+
+            if ($administrasi->status === 'rejected') $rejectedCount++;
+            if ($administrasi->status2 === 'rejected') $rejectedCount++;
+            if ($administrasi->status3 === 'rejected') $rejectedCount++;
+        }
+
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
+
+        return view('dosen.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
     }
+    public function approveadmin()
+    {
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
+
+        return view('dosen.approve_admin', compact('administrasiData'));
+    }
+    public function approvekegiatan()
+    {
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
+
+        return view('dosen.approve_kegiatan', compact('administrasiData'));
+    }
+    public function approvematkul()
+    {
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
+
+        return view('dosen.approve_matkul', compact('administrasiData'));
+    }
+    public function showDetail1($id)
+    {
+        $administrasi = Administrasi::with('user')->findOrFail($id);
+        return view('dosen.detail1', compact('administrasi'));
+    }
+
+    public function updatedetail1(Request $request, $id)
+    {
+        $administrasi = Administrasi::findOrFail($id);
+
+        // Update the note1 field
+        $administrasi->note1 = $request->input('note1');
+
+        // Check which button was pressed
+        if ($request->input('action') == 'approve') {
+            // Handle approve logic
+            $administrasi->status = 'approve';
+        } elseif ($request->input('action') == 'reject') {
+            // Handle reject logic
+            $administrasi->status = 'reject';
+        }
+
+        $administrasi->save();
+
+        return redirect()->route('dosen.detail1', $id)->with('status', 'Update successful!');
+    }
+    public function showDetail2($id)
+    {
+        $administrasi = Administrasi::with('user')->findOrFail($id);
+        return view('dosen.detail2', compact('administrasi'));
+    }
+
+    public function updatedetail2(Request $request, $id)
+    {
+        $administrasi = Administrasi::findOrFail($id);
+
+        // Update the note1 field
+        $administrasi->note2 = $request->input('note2');
+
+        // Check which button was pressed
+        if ($request->input('action') == 'approve') {
+            // Handle approve logic
+            $administrasi->status2 = 'approve';
+        } elseif ($request->input('action') == 'reject') {
+            // Handle reject logic
+            $administrasi->status2 = 'reject';
+        }
+
+        $administrasi->save();
+
+        return redirect()->route('dosen.detail2', $id)->with('status', 'Update successful!');
+    }
+    public function showDetail3($id)
+    {
+        $administrasi = Administrasi::with('user')->findOrFail($id);
+        return view('dosen.detail3', compact('administrasi'));
+    }
+
+    public function updatedetail3(Request $request, $id)
+    {
+        $administrasi = Administrasi::findOrFail($id);
+
+        // Update the note1 field
+        $administrasi->note3 = $request->input('note3');
+
+        // Check which button was pressed
+        if ($request->input('action') == 'approve') {
+            // Handle approve logic
+            $administrasi->status3 = 'approve';
+        } elseif ($request->input('action') == 'reject') {
+            // Handle reject logic
+            $administrasi->status3 = 'reject';
+        }
+
+        $administrasi->save();
+
+        return redirect()->route('dosen.detail3', $id)->with('status', 'Update successful!');
+    }
+    public function showDetail4($id)
+    {
+        $administrasi = Administrasi::with('user')->findOrFail($id);
+
+        return view('dosen.detail4', compact('administrasi'));
+    }
+
+    public function viewPdf($id)
+    {
+        $administrasi = Administrasi::findOrFail($id);
+        return view('dosen.view_pdf', compact('administrasi'));
+    }
+
+
+
+
+
+
+
 
     public function sopshowsekre($id)
     {

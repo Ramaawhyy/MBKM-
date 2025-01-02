@@ -41,7 +41,19 @@ Route::middleware(['auth'])->group(function () {
     Route::get('index/sekretaris/{id}/edit', [IndexController::class, 'editsekre'])->name('sekretaris.sop.edit');
     Route::put('index/sekretaris/{id}/update', [IndexController::class, 'sekresopupdate'])->name('sekretaris.sop.update');
 
-
+    // Dosen
+    Route::get('index/dosen', [IndexController::class, 'dosen'])->middleware('userAkases:dosen')->name('dosen');
+    Route::get('/index/dosen/approve1', [IndexController::class, 'approveadmin'])->name('approveadmin');
+    Route::get('/index/dosen/detail1/{id}', [IndexController::class, 'showDetail1'])->name('dosen.detail1');
+    Route::post('/index/dosen/administrasi/update/{id}', [IndexController::class, 'updatedetail1'])->name('administrasi.update');
+    Route::get('/index/dosen/administrasi/detail2/{id}', [IndexController::class, 'showDetail2'])->name('dosen.detail2');
+    Route::post('/index/dosen/administrasi/update2/{id}', [IndexController::class, 'updatedetail2'])->name('administrasi.update2');
+    Route::get('/index/dosen/administrasi/detail3/{id}', [IndexController::class, 'showDetail3'])->name('dosen.detail3');
+    Route::post('index/dosen/administrasi/update3/{id}', [IndexController::class, 'updatedetail3'])->name('administrasi.update3');
+    Route::get('/index/dosen/administrasi/detail4/{id}', [IndexController::class, 'showDetail4'])->name('dosen.detail4');
+    Route::get('/index/dosen/approve2', [IndexController::class, 'approvekegiatan'])->name('approvekegiatan');
+    Route::get('/index/dosen/approve3', [IndexController::class, 'approvematkul'])->name('approvematkul');
+    Route::get('/index/dosen/view-pdf/{id}', [IndexController::class, 'viewPdf'])->name('administrasi.view_pdf');
 
     // Rute user
     Route::get('/index/user', [IndexController::class, 'user'])->middleware('userAkases:user')->name('user');
