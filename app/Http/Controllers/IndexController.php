@@ -129,6 +129,7 @@ class IndexController extends Controller
             'status' => 'waiting',
             'status2' => 'null',
             'status3' => 'null',
+            'status4'=> 'waiting',
             'user_id' => Auth::id(), // Set the user_id to the currently logged-in user's ID
         ]);
 
@@ -191,7 +192,7 @@ class IndexController extends Controller
 
 
 
-
+    //DOSEN !!!!!!!!!!!!!!!!!!!!!!
 
     public function dosen()
     {
@@ -222,6 +223,36 @@ class IndexController extends Controller
         $administrasiData = Administrasi::with('user')->get();
 
         return view('dosen.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
+    }
+    public function history()
+    {
+        // Initialize counters
+        $approvedCount = 0;
+        $waitingCount = 0;
+        $rejectedCount = 0;
+
+        // Retrieve all administrasi records
+        $administrasiRecords = Administrasi::all();
+
+        // Count each status occurrence
+        foreach ($administrasiRecords as $administrasi) {
+            if ($administrasi->status === 'approved') $approvedCount++;
+            if ($administrasi->status2 === 'approved') $approvedCount++;
+            if ($administrasi->status3 === 'approved') $approvedCount++;
+
+            if ($administrasi->status === 'waiting') $waitingCount++;
+            if ($administrasi->status2 === 'waiting') $waitingCount++;
+            if ($administrasi->status3 === 'waiting') $waitingCount++;
+
+            if ($administrasi->status === 'rejected') $rejectedCount++;
+            if ($administrasi->status2 === 'rejected') $rejectedCount++;
+            if ($administrasi->status3 === 'rejected') $rejectedCount++;
+        }
+
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
+
+        return view('dosen.history', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
     }
     public function approveadmin()
     {
@@ -341,185 +372,105 @@ class IndexController extends Controller
 
 
 
-
-    public function sopshowsekre($id)
-    {
-        $sop = sop::findOrFail($id);
-        return view('sekretaris.show', compact('sop'));
-    }
-    public function editsekre($id)
-    {
-        $sop = SOP::find($id);
-
-        $sop = SOP::find($id);
-        $statusOptions = ['Pengajuan Dokumen', 'Pengajuan Revisi'];
-
-        return view('sekretaris.edit', compact('sop', 'statusOptions'));
-    }
-
-    public function sekresopupdate(Request $request, $id)
-    {
-        $request->validate([
-            'nama' => 'required',
-            'klasifikasi_dokumen' => 'required',
-            'nomor_dokumen' => 'required',
-            'file' => 'nullable|mimes:pdf|max:2048',
-            'persetujuan_sekretaris' => 'required',
-        ]);
-
-        $sop = SOP::find($id);
-
-        if (!$sop) {
-            return redirect('index/sekretaris')->with('error', 'Data tidak ditemukan.');
-        }
-
-        $sop->nama = $request->input('nama');
-        $sop->klasifikasi_dokumen = $request->input('klasifikasi_dokumen');
-        $sop->nomor_dokumen = $request->input('nomor_dokumen');
-        $sop->persetujuan_sekretaris = $request->input('persetujuan_sekretaris');
-
-        // Jika file baru diunggah, simpan yang baru dan hapus yang lama
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $nama_file = time() . "_" . $file->getClientOriginalName();
-            $tujuan_upload = 'public/uploads';
-            $file->storeAs($tujuan_upload, $nama_file);
-
-            // Hapus file lama jika ada
-            if ($sop->file) {
-                Storage::delete('public/uploads/' . $sop->file);
-            }
-
-            $sop->file = $nama_file;
-        }
-
-        // Hapus bagian tambahan untuk persetujuan_mr dan status_pengesahan_direktur
-
-        $sop->save();
-
-        return redirect('index/sekretaris')->with('success', 'Data SOP berhasil diupdate.');
-    }
-
-
-
-    public function sopdestroysekre($id)
-    {
-        $sop = SOP::findOrFail($id);
-        $sop->delete();
-
-        return redirect('index/sekretaris')->with('success', 'Data event berhasil disimpan.');
-    }
-
-
-
-
-    public function admin()
-    {
-        $sop = sop::all();
-        return view('adminall.index', compact('sop'));
-    }
-    public function adminsopedit($id)
-    {
-        $sop = SOP::find($id);
-
-        return view('adminall.edit', compact('sop'));
-    }
-
-    public function adminsopupdate(Request $request, $id)
-    {
-        $request->validate([
-            'persetujuan_mr' => 'required|in:Setuju,Tidak Setuju',
-        ]);
-
-        $sop = SOP::find($id);
-
-        if (!$sop) {
-            return redirect()->back()->with('error', 'Data tidak ditemukan.');
-        }
-
-        $sop->persetujuan_mr = $request->input('persetujuan_mr');
-        $sop->save();
-
-        return redirect('index/admin')->with('success', 'Data SOP berhasil diupdate.');
-    }
-
-    public function sopshow($id)
-    {
-        $sop = sop::findOrFail($id);
-        return view('adminall.show', compact('sop'));
-    }
-
-    public function sopdestroy($id)
-    {
-        $sop = SOP::findOrFail($id);
-        $sop->delete();
-
-        return redirect('index/sekretaris')->with('success', 'Data event berhasil disimpan.');
-    }
-
-
-
-
-
-
-
-
-
-
-
-
+    //KAPRODI !!!!!!!!
 
     public function superadm()
     {
-        $sop = sop::all();
-        return view('direktur.index', compact('sop'));
-    }
+        // Initialize counters
+        $approvedCount = 0;
+        $waitingCount = 0;
+        $rejectedCount = 0;
 
-    public function edit($id)
-    {
-        $sop = SOP::find($id);
-        $statusOptions = ['Sudah Sah', 'Belum Sah'];
+        // Retrieve all administrasi records
+        $administrasiRecords = Administrasi::all();
 
-        return view('direktur.edit', compact('sop'));
-    }
+        // Count each status occurrence
+        foreach ($administrasiRecords as $administrasi) {
+            if ($administrasi->status === 'approved') $approvedCount++;
+            if ($administrasi->status2 === 'approved') $approvedCount++;
+            if ($administrasi->status3 === 'approved') $approvedCount++;
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'status' => 'required',
-            'status_pengesahan_direktur' => 'required',
-            'file' => 'nullable|mimes:pdf|max:2048',
-        ]);
+            if ($administrasi->status === 'waiting') $waitingCount++;
+            if ($administrasi->status2 === 'waiting') $waitingCount++;
+            if ($administrasi->status3 === 'waiting') $waitingCount++;
 
-        $sop = SOP::find($id);
-
-        if (!$sop) {
-            return redirect('index/direktur')->with('error', 'Data tidak ditemukan.');
+            if ($administrasi->status === 'rejected') $rejectedCount++;
+            if ($administrasi->status2 === 'rejected') $rejectedCount++;
+            if ($administrasi->status3 === 'rejected') $rejectedCount++;
         }
 
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
 
-        $sop->status = $request->input('status');
-        $sop->status_pengesahan_direktur = $request->input('status_pengesahan_direktur');
+        return view('kaprodi.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
+    }
+    public function approvekaprodi()
+    {
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
 
-        // Jika file baru diunggah, simpan yang baru dan hapus yang lama
-        if ($request->hasFile('file')) {
-            $file = $request->file('file');
-            $nama_file = time() . "_" . $file->getClientOriginalName();
-            $tujuan_upload = 'public/uploads';
-            $file->storeAs($tujuan_upload, $nama_file);
+        return view('kaprodi.approve_pengajuan', compact('administrasiData'));
+    }
+    public function historykaprodi()
+    {
+        // Initialize counters
+        $approvedCount = 0;
+        $waitingCount = 0;
+        $rejectedCount = 0;
 
-            // Hapus file lama jika ada
-            if ($sop->file) {
-                Storage::delete('public/uploads/' . $sop->file);
-            }
+        // Retrieve all administrasi records
+        $administrasiRecords = Administrasi::all();
 
-            $sop->file = $nama_file;
+        // Count each status occurrence
+        foreach ($administrasiRecords as $administrasi) {
+            if ($administrasi->status === 'approved') $approvedCount++;
+            if ($administrasi->status2 === 'approved') $approvedCount++;
+            if ($administrasi->status3 === 'approved') $approvedCount++;
+
+            if ($administrasi->status === 'waiting') $waitingCount++;
+            if ($administrasi->status2 === 'waiting') $waitingCount++;
+            if ($administrasi->status3 === 'waiting') $waitingCount++;
+
+            if ($administrasi->status === 'rejected') $rejectedCount++;
+            if ($administrasi->status2 === 'rejected') $rejectedCount++;
+            if ($administrasi->status3 === 'rejected') $rejectedCount++;
         }
 
-        // Hapus bagian tambahan untuk persetujuan_mr dan status_pengesahan_direktur
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
 
-        $sop->save();
+        return view('kaprodi.history', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
+    }
+    public function showDetailkaprodi($id)
+    {
+        $administrasi = Administrasi::with('user')->findOrFail($id);
+        return view('kaprodi.detail3', compact('administrasi'));
+    }
 
-        return redirect('index/direktur')->with('success', 'Data SOP berhasil diupdate.');
+    public function updatedetailkaprodi(Request $request, $id)
+    {
+        $administrasi = Administrasi::findOrFail($id);
+
+        // Update the note1 field
+
+
+        // Check which button was pressed
+        if ($request->input('action') == 'approve') {
+            // Handle approve logic
+            $administrasi->status4 = 'approve';
+        } elseif ($request->input('action') == 'reject') {
+            // Handle reject logic
+            $administrasi->status4 = 'reject';
+        }
+
+        $administrasi->save();
+
+        return redirect()->route('kaprodi.detail3', $id)->with('status', 'Update successful!');
+    }
+    public function showDetail5($id)
+    {
+        $administrasi = Administrasi::with('user')->findOrFail($id);
+
+        return view('kaprodi.detail4', compact('administrasi'));
     }
 }

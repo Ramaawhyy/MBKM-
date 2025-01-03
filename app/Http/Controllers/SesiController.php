@@ -46,7 +46,7 @@ class SesiController extends Controller
             } elseif (Auth::user()->role == 'user') {
                 return redirect('index/user');
             } elseif (Auth::user()->role == 'superadm') { // Corrected elseif condition
-                return redirect('index/direktur');
+                return redirect('index/kaprodi');
             } elseif (Auth::user()->role == 'sekretaris') { // Corrected elseif condition
                 return redirect('index/sekretaris');
             } elseif (Auth::user()->role == 'dosen') { // Corrected elseif condition

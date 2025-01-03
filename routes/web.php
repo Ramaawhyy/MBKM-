@@ -44,6 +44,7 @@ Route::middleware(['auth'])->group(function () {
     // Dosen
     Route::get('index/dosen', [IndexController::class, 'dosen'])->middleware('userAkases:dosen')->name('dosen');
     Route::get('/index/dosen/approve1', [IndexController::class, 'approveadmin'])->name('approveadmin');
+    Route::get('/index/dosen/history', [IndexController::class, 'history'])->name('history');
     Route::get('/index/dosen/detail1/{id}', [IndexController::class, 'showDetail1'])->name('dosen.detail1');
     Route::post('/index/dosen/administrasi/update/{id}', [IndexController::class, 'updatedetail1'])->name('administrasi.update');
     Route::get('/index/dosen/administrasi/detail2/{id}', [IndexController::class, 'showDetail2'])->name('dosen.detail2');
@@ -67,34 +68,13 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/administrasi/mata-kuliah', [IndexController::class, 'storeMataKuliah'])->name('administrasi.storeMataKuliah');
     Route::get('/administrasi/{id}', [IndexController::class, 'show'])->name('administrasi.show');
 
-    Route::get('/index/direktur', [IndexController::class, 'superadm'])
-        ->middleware('userAkases:admin,superadm')
-        ->name('superadm');
-    Route::delete('/delete/{id_event}', [IndexController::class, 'destroy'])->name('events.destroy');
-    // Menampilkan form edit SOP
-    Route::get('/index/direktur/edit/{id}', [IndexController::class, 'edit'])->name('superadm.sop.edit');
-
-    // Meng-handle update SOP dari form edit
-    Route::put('/index/direktur/update/{id}', [IndexController::class, 'update'])->name('superadm.sop.update');
-
-
-
-    //KANDIDAT
-    Route::get('/index/kandidat/{id_event}', [IndexController::class, 'kandidat'])->name('adminall.kandidat')->middleware('userAkases:admin,superadm');
-    //Route::get('/createkandidat/{id_event}', [IndexController::class, 'createkandidat'])->name('adminall.tambahkandidat');
-    Route::get('/createkandidat/{id_event}', function ($id_event) {
-        // Mengambil nilai $id_event dari URL
-        $event = Token::where('id_event', $id_event)->first();
-
-        // Lakukan sesuatu dengan $event dan $id_event
-
-        return view('adminall.tambahkandidat', compact('event', 'id_event'));
-    })->name('adminall.tambahkandidat');
-    Route::post('/storekandidat', [IndexController::class, 'storekandidat'])->name('adminall.storekandidat');
-    Route::get('/{id}/editkandidat', [IndexController::class, 'editKandidat'])->name('adminall.editkandidat');
-    Route::put('/{id}/updatekandidat', [IndexController::class, 'updateKandidat'])->name('adminall.updatekandidat');
-    Route::delete('/deleteKandidat/{id}', [IndexController::class, 'deleteKandidat'])->name('deleteKandidat');
-
+    Route::get('/index/kaprodi', [IndexController::class, 'superadm'])->middleware('userAkases:admin,superadm')->name('superadm');
+    Route::get('/index/kaprodi/historykaprodi', [IndexController::class, 'historykaprodi'])->name('historykaprodi');
+    Route::get('/index/kaprodi/detail3/{id}', [IndexController::class, 'showDetailkaprodi'])->name('kaprodi.detail3');
+    Route::post('/index/kaprodi/detail3/{id}', [IndexController::class, 'updatedetailkaprodi'])->name('kaprodi.updateDetail');
+    Route::get('/index/kaprodi/detail4/{id}', [IndexController::class, 'showDetail5'])->name('kaprodi.detail4');
+    Route::get('/index/kaprodi/approve', [IndexController::class, 'approvekaprodi'])->name('kaprodi.approve');
+   
 
 
     //TOKEN

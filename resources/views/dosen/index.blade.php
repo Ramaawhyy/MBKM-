@@ -43,7 +43,7 @@
         </li>
         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
     <li class="nav-item">
-        <a class="nav-link" href="{{ route('dosen') }}">
+        <a class="nav-link" href="{{ route('history') }}">
             <i class="mdi mdi-view-quilt menu-icon"></i>
             <span class="menu-title">History</span>
         </a>
@@ -58,10 +58,6 @@
           <a class="nav-link"  href="{{ route('approvematkul') }}">
             <i class="mdi mdi-view-quilt menu-icon"></i>
             <span class="menu-title">Approval Mata Kuliah Ekivalensi</span>
-        </a>
-        <a class="nav-link"  href="{{ route('user.status') }}">
-            <i class="mdi mdi-view-quilt menu-icon"></i>
-            <span class="menu-title">Status</span>
         </a>
     </li>
 @endif
