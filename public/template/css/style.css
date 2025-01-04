@@ -21815,7 +21815,7 @@ dl li {
 }
 
 .sidebar .nav .nav-item .nav-link .menu-title {
-  color: inherit;
+  color: #000;
   display: inline-block;
   font-size: 0.937rem;
   line-height: 1;
@@ -21835,6 +21835,11 @@ dl li {
   transform: rotate(90deg);
 }
 
+.sidebar .nav .nav-item > .nav-link {
+  background-color: #ffffff; /* Warna putih */
+  color: #000000; /* Teks hitam */
+}
+
 .sidebar .nav .nav-item.active > .nav-link {
   background: #DB3939;
   position: relative;
@@ -21843,7 +21848,7 @@ dl li {
 .sidebar .nav .nav-item.active > .nav-link i,
 .sidebar .nav .nav-item.active > .nav-link .menu-title,
 .sidebar .nav .nav-item.active > .nav-link .menu-arrow {
-  color: #ffffff;
+  color: #ffff;
 }
 
 .sidebar .nav .nav-item.active > .nav-link i.menu-arrow::before {

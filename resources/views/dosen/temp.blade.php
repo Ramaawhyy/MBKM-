@@ -42,7 +42,6 @@
           <span></span>
         </li>
         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
-        @yield('side')
         <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('dosen') }}">
               <i class="mdi mdi-view-quilt menu-icon"></i>
@@ -276,67 +275,6 @@
                        
                         
                       </div>
-                      
-                      
-                  <!-- index.blade.php -->
-                
-<table class="table table-bordered">
-  <thead>
-      <tr>
-        <th>No</th>
-        <th>Jenis Kegiatan</th>
-        <th>Date</th>
-        <th>Status</th>
-        <th>Aksi</th>
-    </tr>
-</thead>
-<tbody>
-     @foreach ($administrasiData as $index => $administrasi)
-   
-            <tr>
-                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
-                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
-                <td>{{ $administrasi->created_at }}</td>
-                <td>{{ $administrasi->status }}</td> <!-- Status -->
-                <td>
-                    <a href="{{ route('dosen.detail4', $administrasi->id) }}" class="btn btn-info">Detail </a>
-                 
-                    </a>
-                </td>
-            </tr>
-            <tr> 
-                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
-                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
-                 <td>{{ $administrasi->created_at }}</td>
-                <td>{{ $administrasi->status2 }}</td> <!-- Status -->
-                <td>
-                   <a href="{{ route('dosen.detail4', $administrasi->id) }}" class="btn btn-info">Detail </a>
-            
-                    </a>
-                </td>
-            </tr>
-            <tr>
-                <td>{{ $index + 1 }}</td> <!-- Sequential number -->
-                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
-                 <td>{{ $administrasi->created_at }}</td>
-                <td>{{ $administrasi->status3 }}</td> <!-- Status -->
-                <td>
-                    <a href="{{ route('dosen.detail4', $administrasi->id) }}" class="btn btn-info">Detail </a>
-                  
-                    </a>
-                </td>
-            </tr>
-              
-        @endforeach
-
-</tbody>
-</table>
-                      </div>
-                    </div>
-                  </div>
-                          </div>
-                        </div>
-
           <!-- row end -->
         </div>
         <!-- content-wrapper ends -->
