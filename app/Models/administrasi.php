@@ -24,6 +24,7 @@ class Administrasi extends Model
         'mata_kuliah_5',
         'status2',
         'status3',
+        'status4',
         'nama_wali_dosen',
         'note1',
         'note2',

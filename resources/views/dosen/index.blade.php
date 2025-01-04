@@ -42,6 +42,7 @@
           <span></span>
         </li>
         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
+<<<<<<< HEAD
         @yield('side')
         <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('dosen') }}">
@@ -79,6 +80,26 @@
       
       
       
+=======
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('history') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">History</span>
+        </a>
+        <a class="nav-link"  href="{{ route('approveadmin') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Approval Administrasi</span>
+        </a>
+          <a class="nav-link"  href="{{ route('approvekegiatan') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Approval Pemilihan Kegiatan</span>
+        </a>
+          <a class="nav-link"  href="{{ route('approvematkul') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">Approval Mata Kuliah Ekivalensi</span>
+        </a>
+    </li>
+>>>>>>> 8c0bb5816fd1c795f15ee67c84849bc31056a475
 @endif
 
         
