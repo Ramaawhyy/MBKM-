@@ -16,9 +16,6 @@ use App\Models\token;
 Route::get('/login', [SesiController::class, 'index'])->name('login');
 Route::post('/login', [SesiController::class, 'login']);
 
-// Definisi rute otentikasi login token
-Route::get('/login-token', [SesiController::class, 'token'])->name('logintoken');
-Route::post('/login-token', [SesiController::class, 'loginToken']);
 
 
 
@@ -30,17 +27,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/index/admin', [IndexController::class, 'admin'])->middleware('userAkases:admin')->name('admin');
     Route::get('/index/admin/edit/{id}', [IndexController::class, 'adminsopedit'])->name('mr.sop.edit');
 
-    // Meng-handle update persetujuan MR dari form edit
-    Route::put('/index/admin/update/{id}', [IndexController::class, 'adminsopupdate'])->name('mr.sop.update');
-    Route::get('/sop/{id}', [IndexController::class, 'sopshow'])->name('sop.show');
-    Route::delete('/sop/{id}', [IndexController::class, 'sopdestroy'])->name('sop.delete');
-
-
-    // Rute yang hanya dapat diakses dengan token valid
-    Route::get('index/sekretaris', [IndexController::class, 'sekretaris'])->middleware('userAkases:sekretaris')->name('sekretaris');
-    Route::get('index/sekretaris/{id}/edit', [IndexController::class, 'editsekre'])->name('sekretaris.sop.edit');
-    Route::put('index/sekretaris/{id}/update', [IndexController::class, 'sekresopupdate'])->name('sekretaris.sop.update');
-
+    
     // Dosen
     Route::get('index/dosen', [IndexController::class, 'dosen'])->middleware('userAkases:dosen')->name('dosen');
     Route::get('/index/dosen/approve1', [IndexController::class, 'approveadmin'])->name('approveadmin');
@@ -77,43 +64,11 @@ Route::middleware(['auth'])->group(function () {
    
 
 
-    //TOKEN
-    Route::get('/index/token/{id_event}', [IndexController::class, 'token'])
-        ->name('adminall.token')
-        ->middleware('userAkases:admin,superadm');
-    //Route::get('/createTokensForm/{id_event}', [IndexController::class, 'createTokensForm'])->name('adminall.tambahtoken');
-    Route::get('/createTokensForm/{id_event}', function ($id_event) {
-        // Mengambil nilai $id_event dari URL
-        $event = Token::where('id_event', $id_event)->first();
-        // Lakukan sesuatu dengan $event dan $id_event
-        return view('adminall.tambahtoken', compact('event', 'id_event'));
-    })->name('adminall.tambahtoken');
-    Route::post('/generateTokens', [IndexController::class, 'generateTokens'])->name('adminall.generateTokens');
-    Route::delete('/deleteToken/{id}', [IndexController::class, 'deleteToken'])->name('deleteToken');
 
-
-    //RESULT HASIL
-    Route::get('/index/result/{id_event}', [IndexController::class, 'result'])->name('adminall.result')->middleware('userAkases:superadm');
 
 
     Route::get('/logout', [SesiController::class, 'logout'])->name('logout');
-    Route::get('/create', [IndexController::class, 'create'])->name('adminall.tambah');
-    Route::post('/store', [IndexController::class, 'store'])->name('adminall.store');
-
-
-    // Rute pemilihan yang memerlukan otentikasi dengan peran user
-    Route::get('/pemilihan', function () {
-        return view('fill.pemilihan');
-    })->name('pemilihan')->middleware('userAkases:user');
-    Route::get('/kandidat', function () {
-        return view('fill.kandidat');
-    })->name('kandidat')->middleware('userAkases:admin');
-
-
-
-    //tambah superadmin
-    //token untuk buat login user token
-    //Route::post('/voting-tokens/use', 'VotingTokenController@useToken')->name('voting_tokens.use');
+   
 });
 
 // Rute fallback untuk tampilan landing
