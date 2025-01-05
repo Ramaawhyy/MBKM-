@@ -1,4 +1,4 @@
-@extends('index')
+@extends('template/temp')
 
 @section('content')
 <div class="container">

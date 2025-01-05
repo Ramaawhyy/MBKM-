@@ -41,36 +41,36 @@
           <img id="sidebarImage" src="{{ asset('template/images/download-removebg-preview.png') }}" alt="Image" class="img-fluid right-align">
           <span></span>
         </li>
-        <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('dosen') }}">
-              <i class="mdi mdi-account menu-icon"></i>
-              <span class="menu-title">History</span>
-          </a>
-      </li>
-      <li class="nav-item {{ request()->routeIs('approveadmin') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('approveadmin') }}">
-              <i class="mdi mdi-check menu-icon"></i>
-              <span class="menu-title">Approval Administrasi</span>
-          </a>
-      </li>
-      <li class="nav-item {{ request()->routeIs('approvekegiatan') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('approvekegiatan') }}">
-              <i class="mdi mdi-calendar-check menu-icon"></i>
-              <span class="menu-title">Approval Pemilihan <br> Kegiatan</span>
-          </a>
-      </li>
-      <li class="nav-item {{ request()->routeIs('approvematkul') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('approvematkul') }}">
-              <i class="mdi mdi-book menu-icon"></i>
-              <span class="menu-title">Approval Mata Kuliah <br>Ekivalensi</span>
-          </a>
-      </li>
-      <li class="nav-item {{ request()->routeIs('user.status') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('user.status') }}">
-              <i class="mdi mdi-account-circle menu-icon"></i>
-              <span class="menu-title">Status</span>
-          </a>
-      </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('user') ? 'active' : '' }}" href="{{ route('user') }}">
+                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+                <span class="menu-title">Dashboard</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}"  href="{{ route('user.tambahsop') }}">
+                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+                <span class="menu-title">Administrasi</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}"  href="{{ route('user.pemilihankegiatan') }}">
+                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+                <span class="menu-title">Pemilihan Kegiatan</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}"  href="{{ route('user.matakuliah') }}">
+                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+                <span class="menu-title">Mata Kuliah Ekivalensi</span>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}">
+                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+                <span class="menu-title">Status</span>
+            </a>
+        </li>
       
         
       
