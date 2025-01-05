@@ -22,7 +22,6 @@ class IndexController extends Controller
     }
     public function user()
     {
-        // Retrieve the administrasi records along with the related user data
         $userId = Auth::id();
 
         // Initialize counters
@@ -33,11 +32,9 @@ class IndexController extends Controller
         // Retrieve all administrasi records for the logged-in user
         $administrasiRecords = Administrasi::where('user_id', $userId)->get();
 
-        // Count each status occurrence
-        foreach ($administrasiRecords as $administrasi) {
-            if (
-                $administrasi->status === 'approved'
-            ) $approvedCount++;
+        // Count each status occurrence and determine class for each status
+        $administrasiData = $administrasiRecords->map(function ($administrasi) use (&$approvedCount, &$waitingCount, &$rejectedCount) {
+            if ($administrasi->status === 'approved') $approvedCount++;
             if ($administrasi->status2 === 'approved') $approvedCount++;
             if ($administrasi->status3 === 'approved') $approvedCount++;
 
@@ -48,10 +45,29 @@ class IndexController extends Controller
             if ($administrasi->status === 'rejected') $rejectedCount++;
             if ($administrasi->status2 === 'rejected') $rejectedCount++;
             if ($administrasi->status3 === 'rejected') $rejectedCount++;
-        }
-        $administrasiData = Administrasi::with('user')->get();
+
+            $administrasi->status_class = $this->getStatusClass($administrasi->status);
+            $administrasi->status2_class = $this->getStatusClass($administrasi->status2);
+            $administrasi->status3_class = $this->getStatusClass($administrasi->status3);
+
+            return $administrasi;
+        });
 
         return view('user.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
+    }
+
+    private function getStatusClass($status)
+    {
+        switch ($status) {
+            case 'approved':
+                return 'bg-success text-white'; // Green
+            case 'waiting':
+                return 'bg-warning text-dark'; // Yellow
+            case 'rejected':
+                return 'bg-danger text-white'; // Red
+            default:
+                return 'bg-secondary text-white'; // Gray
+        }
     }
     public function createsop()
     {
