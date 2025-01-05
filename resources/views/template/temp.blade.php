@@ -41,44 +41,42 @@
           <img id="sidebarImage" src="../template/images/download-removebg-preview.png" alt="Image" class="img-fluid right-align">
           <span></span>
         </li>
-        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
         <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('dosen') }}">
-              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <i class="mdi mdi-account menu-icon"></i>
               <span class="menu-title">History</span>
           </a>
       </li>
       <li class="nav-item {{ request()->routeIs('approveadmin') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('approveadmin') }}">
-              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <i class="mdi mdi-check menu-icon"></i>
               <span class="menu-title">Approval Administrasi</span>
           </a>
       </li>
       <li class="nav-item {{ request()->routeIs('approvekegiatan') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('approvekegiatan') }}">
-              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <i class="mdi mdi-calendar-check menu-icon"></i>
               <span class="menu-title">Approval Pemilihan Kegiatan</span>
           </a>
       </li>
       <li class="nav-item {{ request()->routeIs('approvematkul') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('approvematkul') }}">
-              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <i class="mdi mdi-book menu-icon"></i>
               <span class="menu-title">Approval Mata Kuliah Ekivalensi</span>
           </a>
       </li>
-      
       <li class="nav-item {{ request()->routeIs('user.status') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('user.status') }}">
-              <i class="mdi mdi-view-quilt menu-icon"></i>
+              <i class="mdi mdi-account-circle menu-icon"></i>
               <span class="menu-title">Status</span>
           </a>
       </li>
       
+        
       
       
       
-      
-@endif
+
 
         
         
