@@ -66,8 +66,8 @@
               <span class="menu-title">Approval Mata Kuliah <br>Ekivalensi</span>
           </a>
       </li>
-      <li class="nav-item {{ request()->routeIs('user.historye') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('user.status') }}">
+      <li class="nav-item {{ request()->routeIs('history') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('history') }}">
               <i class="mdi mdi-account-circle menu-icon"></i>
               <span class="menu-title">Status</span>
           </a>
