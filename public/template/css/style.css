@@ -21840,10 +21840,13 @@ dl li {
   color: #ffffff;
 }
 
+
 .sidebar .nav .nav-item > .nav-link {
   background-color: transparent;
   color: #333;
 }
+
+
 
 
 .sidebar .nav .nav-item.active > .nav-link i,
@@ -21866,7 +21869,116 @@ dl li {
   background: #EA7172;
   color: #ffffff;
 }
+/* Nav Baru */
 
+.sidebar .nav .nav-item .nav-link1 {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-align-items: center;
+  align-items: center;
+  white-space: nowrap;
+  padding: 0.76rem 2.125rem;
+  color: #ffffff;
+  -webkit-transition-duration: 0.45s;
+  -moz-transition-duration: 0.45s;
+  -o-transition-duration: 0.45s;
+  transition-duration: 0.45s;
+  transition-property: color;
+  -webkit-transition-property: color;
+}
+
+.sidebar .nav .nav-item .nav-link1 i {
+  color: inherit;
+}
+
+.sidebar .nav .nav-item .nav-link1 i.menu-icon {
+  font-size: 1.125rem;
+  line-height: 1;
+  margin-right: 1.125rem;
+  color: #ffffff;
+}
+
+.sidebar .nav .nav-item .nav-link1 i.menu-icon:before {
+  vertical-align: middle;
+}
+
+.sidebar .nav .nav-item .nav-link1 i.menu-arrow {
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  margin-left: auto;
+  margin-right: 0.2rem;
+  color: #ffffff;
+  font-weight: normal;
+}
+
+.sidebar .nav .nav-item .nav-link1 i.menu-arrow:before {
+  content: "\F142";
+  font-family: "Material Design Icons";
+  font-style: normal;
+  display: block;
+  font-size: 1.1rem;
+  line-height: 10px;
+  -webkit-transition: all 0.2s ease-in;
+  -moz-transition: all 0.2s ease-in;
+  -ms-transition: all 0.2s ease-in;
+  -o-transition: all 0.2s ease-in;
+  transition: all 0.2s ease-in;
+}
+
+.sidebar .nav .nav-item .nav-link1 .menu-title {
+  color: #000;
+  display: inline-block;
+  font-size: 0.937rem;
+  line-height: 1;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+.sidebar .nav .nav-item .nav-link1 .badge {
+  margin-left: auto;
+}
+
+.sidebar .nav .nav-item .nav-link1[aria-expanded="true"] i.menu-arrow:before {
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -webkit-transform: rotate(90deg);
+  transform: rotate(90deg);
+}
+
+.sidebar .nav .nav-item.active > .nav-link1 {
+  background-color: white;
+  color: #ffffff;
+}
+
+.sidebar .nav .nav-item > .nav-link1 {
+  background-color: transparent;
+  color: #333;
+}
+
+
+.sidebar .nav .nav-item.active > .nav-link1 i,
+.sidebar .nav .nav-item.active > .nav-link1 .menu-title,
+.sidebar .nav .nav-item.active > .nav-link1 .menu-arrow {
+  color: #ffff;
+}
+
+.sidebar .nav .nav-item.active > .nav-link1 i.menu-arrow::before {
+  content: "\f140";
+}
+
+
+
+.sidebar .nav:not(.sub-menu) > .nav-item > .nav-link1 {
+  margin: 0;
+}
+
+.sidebar .nav:not(.sub-menu) > .nav-item:hover > .nav-link1 {
+  background: #EA7172;
+  color: #ffffff;
+}
+/* end nav baru */
 .sidebar .nav:not(.sub-menu) {
   margin-top: 1.3rem;
 }

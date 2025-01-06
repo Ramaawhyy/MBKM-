@@ -1,13 +1,9 @@
-@extends('template/temp1') 
+@extends('template.tempuser') 
+
 @section('content')
-    <div class="row">
-                  <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
                       @if(Auth::user()->role == 'user')
-                      <div class="table-responsive pt-3">                     
-                      </div>
-                
 <table class="table table-bordered">
   <thead>
       <tr>
@@ -71,7 +67,7 @@
         <!-- partial:./partials/_footer.html -->
         
 @else
-  <p>No data available</p>
+  
   @endif
 @endsection
 @section('cardatas')

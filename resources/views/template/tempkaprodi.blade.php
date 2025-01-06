@@ -7,15 +7,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Web Pemilihan</title>
   <!-- base:css -->
-  <link rel="stylesheet" href="{{ asset('template/vendors/mdi/css/materialdesignicons.min.css') }}">
-  <link rel="stylesheet" href="{{ asset('template/vendors/css/vendor.bundle.base.css') }}">
+  <link rel="stylesheet" href="../template/vendors/mdi/css/materialdesignicons.min.css">
+  <link rel="stylesheet" href="../template/vendors/css/vendor.bundle.base.css">
   <!-- endinject -->
   <!-- plugin css for this page -->
   <!-- End plugin css for this page -->
   <!-- inject:css -->
-  <link rel="stylesheet" href="{{ asset('template/css/style.css') }}">
+  <link rel="stylesheet" href="../template/css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="{{ asset('template/images/favicon.png') }}" />
+  <link rel="shortcut icon" href="../template/images/favicon.png" />
   <style>
     /* Tambahkan ini di file CSS Anda atau di dalam tag <style> di bagian <head> */
 .hidden {
@@ -38,45 +38,23 @@
       <ul class="nav">
         <li class="nav-item sidebar-category">
           <!-- Gambar yang akan disembunyikan -->
-          <img id="sidebarImage" src="{{ asset('template/images/download-removebg-preview.png') }}" alt="Image" class="img-fluid right-align">
+          <img id="sidebarImage" src="../template/images/download-removebg-preview.png" alt="Image" class="img-fluid right-align">
           <span></span>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user') ? 'active' : '' }}" href="{{ route('user') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Dashboard</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}"  href="{{ route('user.tambahsop') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Administrasi</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}"  href="{{ route('user.pemilihankegiatan') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Pemilihan Kegiatan</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}"  href="{{ route('user.matakuliah') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Mata Kuliah Ekivalensi</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Status</span>
-            </a>
-        </li>
-      
-        
-      
-      
-      
-
+        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
+    <li class="nav-item" {{ request()->routeIs('historykaprodi') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('historykaprodi') }}">
+            <i class="mdi mdi-view-quilt menu-icon"></i>
+            <span class="menu-title">History</span>
+        </a>
+    </li>
+    <li class="nav-item {{ request()->routeIs('kaprodi.approve') ? 'active' : '' }}" style="background-color: white;">
+        <a class="nav-link" href="{{ route('kaprodi.approve') }}">
+            <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+            <span class="menu-title" style="color: black;">Approval Pengajuan MBKM</span>
+        </a>
+    </li>
+@endif
 
         
         
@@ -94,7 +72,7 @@
            
           </div>
           @if(Auth::user()->role == 'user')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Mahasiswa</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Unit Perusahaan</h4>
                 @endif
                 @if(Auth::user()->role == 'admin')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Management Representative</h4>
@@ -209,7 +187,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                 @if(Auth::user()->role == 'user')
-                <span class="nav-profile-name">Mahasiswa</span>
+                <span class="nav-profile-name">Unit Perusahaan</span>
                 @endif
                 @if(Auth::user()->role == 'admin')
                 <span class="nav-profile-name">Management Representative</span>
@@ -235,24 +213,60 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            @yield('cardatas')
+            <div class="col-md-4 grid-margin">
+              <div class="card text-white bg-success" style="background-image: url('{{ asset('img/hijau.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                      <h5 class="card-title" style="margin: 0;">Approved</h5>
+                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $approvedCount }}</span>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="col-md-4 grid-margin">
+            <div class="card text-white bg-warning" style="background-image: url('{{ asset('img/kuning.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+                <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h5 class="card-title" style="margin: 0;">Waiting</h5>
+                    <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $waitingCount }}</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 grid-margin">
+          <div class="card text-white bg-danger" style="background-image: url('{{ asset('img/merah.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+              <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                  <h5 class="card-title" style="margin: 0;">Rejected</h5>
+                  <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $rejectedCount }}</span>
+              </div>
+          </div>
+      </div>
         </div>
           <div class="row">
                   <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
                       @yield('content')
-                      @if(Auth::user()->role == 'user')
+                      @if(Auth::user()->role == 'superadm')
                       <div class="table-responsive pt-3">
                       
                        
                         
                       </div>
-          <!-- row end -->
-        </div>
+                      
+                      
+                  <!-- index.blade.php -->
+                
         <!-- content-wrapper ends -->
         <!-- partial:./partials/_footer.html -->
-       
+        <footer class="footer">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-sm-flex justify-content-center justify-content-sm-between py-2">
+                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2021</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Only the best <a href="https://www.bootstrapdash.com/" target="_blank"> Bootstrap dashboard </a> templates</span>
+              </div>
+            </div>
+          </div>
+        </footer>
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
@@ -275,22 +289,22 @@
   </script>
   
   <!-- base:js -->
-  <script src="{{ asset('template/vendors/js/vendor.bundle.base.js') }}"></script>
+  <script src="../template/vendors/js/vendor.bundle.base.js"></script>
   <!-- endinject -->
   <!-- Plugin js for this page-->
-  <script src="{{ asset('template/vendors/chart.js/Chart.min.js') }}"></script>
-  <script src="{{ asset('template/js/jquery.cookie.js') }}" type="text/javascript"></script>
+  <script src="../template/vendors/chart.js/Chart.min.js"></script>
+  <script src="../template/js/jquery.cookie.js" type="text/javascript"></script>
   <!-- End plugin js for this page-->
   <!-- inject:js -->
-  <script src="{{ asset('template/js/off-canvas.js') }}"></script>
-  <script src="{{ asset('template/js/hoverable-collapse.js') }}"></script>
-  <script src="{{ asset('template/js/template.js') }}"></script>
+  <script src="../template/js/off-canvas.js"></script>
+  <script src="../template/js/hoverable-collapse.js"></script>
+  <script src="../template/js/template.js"></script>
   <!-- endinject -->
   <!-- plugin js for this page -->
-    <script src="{{ asset('template/js/jquery.cookie.js') }}" type="text/javascript"></script>
+    <script src="../template/js/jquery.cookie.js" type="text/javascript"></script>
   <!-- End plugin js for this page -->
   <!-- Custom js for this page-->
-  <script src="{{ asset('template/js/dashboard.js') }}"></script>
+  <script src="../template/js/dashboard.js"></script>
   <!-- End custom js for this page-->
   <!-- Delete icon trigger -->
 

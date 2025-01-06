@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Web Pemilihan</title>
+  <title>Web MBKM</title>
   <!-- base:css -->
   <link rel="stylesheet" href="{{ asset('template/vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('template/vendors/css/vendor.bundle.base.css') }}">
@@ -43,32 +43,32 @@
         </li>
         <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('user') ? 'active' : '' }}" href="{{ route('user') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Dashboard</span>
+                <i class="mdi mdi-view-quilt menu-icon" ></i>
+                <span class="menu-title" >Dashboard</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}"  href="{{ route('user.tambahsop') }}">
+            <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}"  href="{{ route('user.tambahsop') }}" style="background-color: white;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Administrasi</span>
+                <span class="menu-title" style="color: black;">Administrasi</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}"  href="{{ route('user.pemilihankegiatan') }}">
+            <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}"  href="{{ route('user.pemilihankegiatan') }}" style="background-color: white;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Pemilihan Kegiatan</span>
+                <span class="menu-title" style="color: black;">Pemilihan Kegiatan</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}"  href="{{ route('user.matakuliah') }}">
+            <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}"  href="{{ route('user.matakuliah') }}" style="background-color: white;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Mata Kuliah Ekivalensi</span>
+                <span class="menu-title" style="color: black;">Mata Kuliah Ekivalensi</span>
             </a>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}">
+            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}" style="background-color: white;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Status</span>
+                <span class="menu-title" style="color: black;">Status</span>
             </a>
         </li>
       

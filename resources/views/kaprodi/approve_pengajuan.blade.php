@@ -1,4 +1,4 @@
-@extends('index') <!-- Merujuk ke template utama -->
+@extends('template/temp2') <!-- Merujuk ke template utama -->
 
 @section('content')
 <div class="container">

@@ -41,37 +41,36 @@
           <img id="sidebarImage" src="{{ asset('template/images/download-removebg-preview.png') }}" alt="Image" class="img-fluid right-align">
           <span></span>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user') ? 'active' : '' }}" href="{{ route('user') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Dashboard</span>
+        <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('dosen') }}">
+                <i class="mdi mdi-account menu-icon"></i>
+                <span class="menu-title">History</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}"  href="{{ route('user.tambahsop') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Administrasi</span>
+        <li class="nav-item {{ request()->routeIs('approveadmin') ? 'active' : '' }}" style="background-color: white;">
+            <a class="nav-link" href="{{ route('approveadmin') }}">
+                <i class="mdi mdi-check menu-icon" style="color: black;"></i>
+                <span class="menu-title" style="color: black;">Approval Administrasi</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}"  href="{{ route('user.pemilihankegiatan') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Pemilihan Kegiatan</span>
+        <li class="nav-item {{ request()->routeIs('approvekegiatan') ? 'active' : '' }}" style="background-color: white;">
+            <a class="nav-link" href="{{ route('approvekegiatan') }}">
+                <i class="mdi mdi-calendar-check menu-icon" style="color: black;"></i>
+                <span class="menu-title" style="color: black;">Approval Pemilihan <br> Kegiatan</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}"  href="{{ route('user.matakuliah') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Mata Kuliah Ekivalensi</span>
+        <li class="nav-item {{ request()->routeIs('approvematkul') ? 'active' : '' }}" style="background-color: white;">
+            <a class="nav-link" href="{{ route('approvematkul') }}">
+                <i class="mdi mdi-book menu-icon" style="color: black;"></i>
+                <span class="menu-title" style="color: black;">Approval Mata Kuliah <br>Ekivalensi</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Status</span>
+        <li class="nav-item {{ request()->routeIs('user.historye') ? 'active' : '' }}" style="background-color: white;">
+            <a class="nav-link" href="{{ route('user.status') }}">
+                <i class="mdi mdi-account-circle menu-icon" style="color: black;"></i>
+                <span class="menu-title" style="color: black;">Status</span>
             </a>
         </li>
-      
         
       
       
@@ -94,7 +93,7 @@
            
           </div>
           @if(Auth::user()->role == 'user')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Mahasiswa</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Unit Perusahaan</h4>
                 @endif
                 @if(Auth::user()->role == 'admin')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Management Representative</h4>
@@ -209,7 +208,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                 @if(Auth::user()->role == 'user')
-                <span class="nav-profile-name">Mahasiswa</span>
+                <span class="nav-profile-name">Unit Perusahaan</span>
                 @endif
                 @if(Auth::user()->role == 'admin')
                 <span class="nav-profile-name">Management Representative</span>
@@ -222,10 +221,13 @@
                 @endif
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item"  href="{{ route('logout') }}" >
+                <a class="dropdown-item"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class="mdi mdi-logout text-primary"></i>
                   Logout
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
+                  @csrf
+                </form>
               </div>
         </div>
        
@@ -242,7 +244,7 @@
                     <div class="card">
                       <div class="card-body">
                       @yield('content')
-                      @if(Auth::user()->role == 'user')
+                      @if(Auth::user()->role == 'dosen')
                       <div class="table-responsive pt-3">
                       
                        

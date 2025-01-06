@@ -41,42 +41,20 @@
           <img id="sidebarImage" src="{{ asset('template/images/download-removebg-preview.png') }}" alt="Image" class="img-fluid right-align">
           <span></span>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user') ? 'active' : '' }}" href="{{ route('user') }}">
+        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
+        <li class="nav-item" {{ request()->routeIs('historykaprodi') ? 'active' : '' }}">
+            <a class="nav-link" href="{{ route('historykaprodi') }}">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title">History</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}"  href="{{ route('user.tambahsop') }}">
+        <li class="nav-item {{ request()->routeIs('kaprodi.approve') ? 'active' : '' }}" style="background-color: white;">
+            <a class="nav-link" href="{{ route('kaprodi.approve') }}">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Administrasi</span>
+                <span class="menu-title" style="color: black;">Approval Pengajuan MBKM</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}"  href="{{ route('user.pemilihankegiatan') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Pemilihan Kegiatan</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}"  href="{{ route('user.matakuliah') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Mata Kuliah Ekivalensi</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Status</span>
-            </a>
-        </li>
-      
-        
-      
-      
-      
-
+@endif
 
         
         
@@ -94,7 +72,7 @@
            
           </div>
           @if(Auth::user()->role == 'user')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Mahasiswa</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Unit Perusahaan</h4>
                 @endif
                 @if(Auth::user()->role == 'admin')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Management Representative</h4>
@@ -118,7 +96,7 @@
                 <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                      <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
+                      <img src="{{ asset('images/faces/face4.jpg') }}" alt="image" class="profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow">
                     <h6 class="preview-subject ellipsis font-weight-normal">David Grey
@@ -130,7 +108,7 @@
                 </a>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                      <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
+                      <img src="{{ asset('images/faces/face2.jpg') }}" alt="image" class="profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow">
                     <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
@@ -142,7 +120,7 @@
                 </a>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                      <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
+                      <img src="{{ asset('images/faces/face3.jpg') }}" alt="image" class="profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow">
                     <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
@@ -209,7 +187,7 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                 @if(Auth::user()->role == 'user')
-                <span class="nav-profile-name">Mahasiswa</span>
+                <span class="nav-profile-name">Unit Perusahaan</span>
                 @endif
                 @if(Auth::user()->role == 'admin')
                 <span class="nav-profile-name">Management Representative</span>
@@ -235,24 +213,60 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            @yield('cardatas')
+            <div class="col-md-4 grid-margin">
+              <div class="card text-white bg-success" style="background-image: url('{{ asset('img/hijau.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+                  <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                      <h5 class="card-title" style="margin: 0;">Approved</h5>
+                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;"></span>
+                  </div>
+              </div>
+          </div>
+          
+          <div class="col-md-4 grid-margin">
+            <div class="card text-white bg-warning" style="background-image: url('{{ asset('img/kuning.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+                <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                    <h5 class="card-title" style="margin: 0;">Waiting</h5>
+                    <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;"></span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 grid-margin">
+          <div class="card text-white bg-danger" style="background-image: url('{{ asset('img/merah.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
+              <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
+                  <h5 class="card-title" style="margin: 0;">Rejected</h5>
+                  <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;"></span>
+              </div>
+          </div>
+      </div>
         </div>
           <div class="row">
                   <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
                       @yield('content')
-                      @if(Auth::user()->role == 'user')
+                      @if(Auth::user()->role == 'superadm')
                       <div class="table-responsive pt-3">
                       
                        
                         
                       </div>
-          <!-- row end -->
-        </div>
+                      
+                      
+                  <!-- index.blade.php -->
+                
         <!-- content-wrapper ends -->
         <!-- partial:./partials/_footer.html -->
-       
+        <footer class="footer">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-sm-flex justify-content-center justify-content-sm-between py-2">
+                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2021</span>
+                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Only the best <a href="https://www.bootstrapdash.com/" target="_blank"> Bootstrap dashboard </a> templates</span>
+              </div>
+            </div>
+          </div>
+        </footer>
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
