@@ -18,7 +18,16 @@ class IndexController extends Controller
 {
     public function index()
     {
-        return view('index');
+        $programs = Administrasi::select('program_mbkm')
+        ->groupBy('program_mbkm')
+        ->selectRaw('count(*) as total, program_mbkm')
+        ->get();
+
+    $programData = $programs->mapWithKeys(function ($item) {
+        return [$item['program_mbkm'] => $item['total']];
+    });
+
+    return view('index', compact('programData'));
     }
     public function user()
     {
@@ -211,8 +220,12 @@ class IndexController extends Controller
     //DOSEN !!!!!!!!!!!!!!!!!!!!!!
 
     public function dosen()
-    {
-        // Initialize counters
+    { 
+        $programData = DB::table('administrasis')
+        ->select('program_mbkm', DB::raw('count(*) as total'))
+        ->groupBy('program_mbkm')
+        ->get();
+          // Initialize counters
         $approvedCount = 0;
         $waitingCount = 0;
         $rejectedCount = 0;
@@ -238,7 +251,7 @@ class IndexController extends Controller
         // Retrieve the administrasi records along with the related user data
         $administrasiData = Administrasi::with('user')->get();
 
-        return view('dosen.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
+        return view('dosen.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount', 'programData'));
     }
     public function history()
     {

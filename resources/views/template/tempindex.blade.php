@@ -23,6 +23,11 @@
     /* Tambahan opsional untuk transisi halus */
     transition: opacity 0.3s ease;
     opacity: 0;
+
+    .white-bg {
+    background-color: white;
+}
+
 }
 
   </style>
@@ -44,34 +49,35 @@
         <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('dosen') }}">
                 <i class="mdi mdi-account menu-icon"></i>
-                <span class="menu-title">History</span>
+                <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item {{ request()->routeIs('approveadmin') ? 'active' : '' }}" style="background-color: white;">
-            <a class="nav-link" href="{{ route('approveadmin') }}">
-                <i class="mdi mdi-check menu-icon" style="color: black;"></i>
-                <span class="menu-title" style="color: black;">Approval Administrasi</span>
-            </a>
-        </li>
-        <li class="nav-item {{ request()->routeIs('approvekegiatan') ? 'active' : '' }}" style="background-color: white;">
-            <a class="nav-link" href="{{ route('approvekegiatan') }}">
-                <i class="mdi mdi-calendar-check menu-icon" style="color: black;"></i>
-                <span class="menu-title" style="color: black;">Approval Pemilihan <br> Kegiatan</span>
-            </a>
-        </li>
-        <li class="nav-item {{ request()->routeIs('approvematkul') ? 'active' : '' }}" style="background-color: white;">
-            <a class="nav-link" href="{{ route('approvematkul') }}">
-                <i class="mdi mdi-book menu-icon" style="color: black;"></i>
-                <span class="menu-title" style="color: black;">Approval Mata Kuliah <br>Ekivalensi</span>
-            </a>
-        </li>
-        <li class="nav-item {{ request()->routeIs('user.historye') ? 'active' : '' }}" style="background-color: white;">
-            <a class="nav-link" href="{{ route('user.status') }}">
-                <i class="mdi mdi-account-circle menu-icon" style="color: black;"></i>
-                <span class="menu-title" style="color: black;">Status</span>
-            </a>
-        </li>
-        
+        <li class="nav-item white-bg {{ request()->routeIs('approveadmin') ? 'active' : '' }}">
+          <a class="nav-link1" href="{{ route('approveadmin') }}">
+              <i class="mdi mdi-check menu-icon" style="color: black;"></i>
+              <span class="menu-title" style="color: black;">Approval Administrasi</span>
+          </a>
+      </li>
+      <li class="nav-item white-bg {{ request()->routeIs('approvekegiatan') ? 'active' : '' }}">
+          <a class="nav-link1" href="{{ route('approvekegiatan') }}">
+              <i class="mdi mdi-calendar-check menu-icon" style="color: black;"></i>
+              <span class="menu-title" style="color: black;">Approval Pemilihan <br> Kegiatan</span>
+          </a>
+      </li>
+      <li class="nav-item white-bg {{ request()->routeIs('approvematkul') ? 'active' : '' }}">
+          <a class="nav-link1" href="{{ route('approvematkul') }}">
+              <i class="mdi mdi-book menu-icon" style="color: black;"></i>
+              <span class="menu-title" style="color: black;">Approval Mata Kuliah <br>Ekivalensi</span>
+          </a>
+      </li>
+      <li class="nav-item white-bg {{ request()->routeIs('history') ? 'active' : '' }}">
+          <a class="nav-link1" href="{{ route('history') }}">
+              <i class="mdi mdi-account-circle menu-icon" style="color: black;"></i>
+              <span class="menu-title" style="color: black;">Status</span>
+          </a>
+      </li>
+      
+      
       
       
       
@@ -261,6 +267,8 @@
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+
+  @yield('scripts')
   <!-- container-scroller -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {

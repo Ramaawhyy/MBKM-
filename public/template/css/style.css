@@ -21952,6 +21952,11 @@ dl li {
   color: #ffffff;
 }
 
+.nav-item.white-bg:not(.active) {
+  background-color: white;
+}
+
+
 .sidebar .nav .nav-item > .nav-link1 {
   background-color: transparent;
   color: #333;
