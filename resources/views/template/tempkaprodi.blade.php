@@ -49,9 +49,9 @@
         </a>
     </li>
     <li class="nav-item {{ request()->routeIs('kaprodi.approve') ? 'active' : '' }}" style="background-color: white;">
-        <a class="nav-link" href="{{ route('kaprodi.approve') }}">
+        <a class="nav-link1" href="{{ route('kaprodi.approve') }}">
             <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-            <span class="menu-title" style="color: black;">Approval Pengajuan MBKM</span>
+            <span class="menu-title" style="color: black;">Approval Pengajuan <br>MBKM</span>
         </a>
     </li>
 @endif
@@ -78,7 +78,7 @@
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Management Representative</h4>
                 @endif
                 @if(Auth::user()->role == 'superadm')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Direktur</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Kaprodi</h4>
                 @endif
                 @if(Auth::user()->role == 'dosen')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Dosen</h4>
@@ -193,7 +193,7 @@
                 <span class="nav-profile-name">Management Representative</span>
                 @endif
                 @if(Auth::user()->role == 'superadm')
-                <span class="nav-profile-name">Direktur</span>
+                <span class="nav-profile-name">Kaprodi</span>
                 @endif
                 @if(Auth::user()->role == 'dosen')
                 <span class="nav-profile-name">Dosen</span>
@@ -216,29 +216,12 @@
             <div class="col-md-4 grid-margin">
               <div class="card text-white bg-success" style="background-image: url('{{ asset('img/hijau.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
                   <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
-                      <h5 class="card-title" style="margin: 0;">Approved</h5>
-                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $approvedCount }}</span>
+                      <h5 class="card-title" style="margin: 0;">Approval Administrasi</h5>
+                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $waitingCount }}</span>
                   </div>
               </div>
           </div>
           
-          <div class="col-md-4 grid-margin">
-            <div class="card text-white bg-warning" style="background-image: url('{{ asset('img/kuning.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
-                <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
-                    <h5 class="card-title" style="margin: 0;">Waiting</h5>
-                    <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $waitingCount }}</span>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-4 grid-margin">
-          <div class="card text-white bg-danger" style="background-image: url('{{ asset('img/merah.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
-              <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
-                  <h5 class="card-title" style="margin: 0;">Rejected</h5>
-                  <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ $rejectedCount }}</span>
-              </div>
-          </div>
-      </div>
         </div>
           <div class="row">
                   <div class="col-12 grid-margin stretch-card">
@@ -257,22 +240,14 @@
                 
         <!-- content-wrapper ends -->
         <!-- partial:./partials/_footer.html -->
-        <footer class="footer">
-          <div class="card">
-            <div class="card-body">
-              <div class="d-sm-flex justify-content-center justify-content-sm-between py-2">
-                <span class="text-muted text-center text-sm-left d-block d-sm-inline-block">Copyright © <a href="https://www.bootstrapdash.com/" target="_blank">bootstrapdash.com </a>2021</span>
-                <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Only the best <a href="https://www.bootstrapdash.com/" target="_blank"> Bootstrap dashboard </a> templates</span>
-              </div>
-            </div>
-          </div>
-        </footer>
+       
         <!-- partial -->
       </div>
       <!-- main-panel ends -->
     </div>
     <!-- page-body-wrapper ends -->
   </div>
+  @yield('scripts')
   <!-- container-scroller -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {

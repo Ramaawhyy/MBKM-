@@ -5,7 +5,7 @@
   <!-- Required meta tags -->
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Web Pemilihan</title>
+  <title>Web MBKM</title>
   <!-- base:css -->
   <link rel="stylesheet" href="{{ asset('template/vendors/mdi/css/materialdesignicons.min.css') }}">
   <link rel="stylesheet" href="{{ asset('template/vendors/css/vendor.bundle.base.css') }}">
@@ -41,20 +41,52 @@
           <img id="sidebarImage" src="{{ asset('template/images/download-removebg-preview.png') }}" alt="Image" class="img-fluid right-align">
           <span></span>
         </li>
-        @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
-        <li class="nav-item" {{ request()->routeIs('historykaprodi') ? 'active' : '' }}">
-            <a class="nav-link" href="{{ route('historykaprodi') }}">
+        <li class="nav-item">
+            <a class="nav-link1 {{ request()->routeIs('user') ? 'active' : '' }}" href="{{ route('user') }}" style="color: black;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">History</span>
+                <span class="menu-title" style="color: black;">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item {{ request()->routeIs('kaprodi.approve') ? 'active' : '' }}" style="background-color: white;">
-            <a class="nav-link" href="{{ route('kaprodi.approve') }}">
+         <li class="nav-item">
+            <a class="nav-link">
+                <i class="mdi mdi-view-quilt menu-icon" style="color: black" ></i>
+                <span class="menu-title" >Pengajuan MBKM</span>
+            </a>
+            <ul>
+
+    <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}" href="{{ route('user.tambahsop') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
+        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+        <span class="menu-title" style="color: black;">Administrasi</span>
+    </a>
+
+
+    <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}" href="{{ route('user.pemilihankegiatan') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
+        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+        <span class="menu-title" style="color: black;">Pemilihan Kegiatan</span>
+    </a>
+
+
+
+    <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}" href="{{ route('user.matakuliah') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
+        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+        <span class="menu-title" style="color: black;">Mata Kuliah Ekivalensi</span>
+    </a>
+
+            </ul>
+              <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}" style="background-color: white;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title" style="color: black;">Approval Pengajuan <br> MBKM</span>
+                <span class="menu-title" style="color: black;">Status</span>
             </a>
         </li>
-@endif
+      
+        </li>
+       
+        
+      
+      
+      
+
 
         
         
@@ -72,13 +104,13 @@
            
           </div>
           @if(Auth::user()->role == 'user')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Unit Perusahaan</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Mahasiswa</h4>
                 @endif
                 @if(Auth::user()->role == 'admin')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Management Representative</h4>
                 @endif
                 @if(Auth::user()->role == 'superadm')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Kaprodi</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Direktur</h4>
                 @endif
                 @if(Auth::user()->role == 'dosen')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Dosen</h4>
@@ -96,7 +128,7 @@
                 <p class="mb-0 font-weight-normal float-left dropdown-header">Messages</p>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                      <img src="{{ asset('images/faces/face4.jpg') }}" alt="image" class="profile-pic">
+                      <img src="images/faces/face4.jpg" alt="image" class="profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow">
                     <h6 class="preview-subject ellipsis font-weight-normal">David Grey
@@ -108,7 +140,7 @@
                 </a>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                      <img src="{{ asset('images/faces/face2.jpg') }}" alt="image" class="profile-pic">
+                      <img src="images/faces/face2.jpg" alt="image" class="profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow">
                     <h6 class="preview-subject ellipsis font-weight-normal">Tim Cook
@@ -120,7 +152,7 @@
                 </a>
                 <a class="dropdown-item preview-item">
                   <div class="preview-thumbnail">
-                      <img src="{{ asset('images/faces/face3.jpg') }}" alt="image" class="profile-pic">
+                      <img src="images/faces/face3.jpg" alt="image" class="profile-pic">
                   </div>
                   <div class="preview-item-content flex-grow">
                     <h6 class="preview-subject ellipsis font-weight-normal"> Johnson
@@ -187,13 +219,13 @@
             <li class="nav-item nav-profile dropdown">
               <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
                 @if(Auth::user()->role == 'user')
-                <span class="nav-profile-name">Unit Perusahaan</span>
+                <span class="nav-profile-name">Mahasiswa</span>
                 @endif
                 @if(Auth::user()->role == 'admin')
                 <span class="nav-profile-name">Management Representative</span>
                 @endif
                 @if(Auth::user()->role == 'superadm')
-                <span class="nav-profile-name">Kaprodi</span>
+                <span class="nav-profile-name">Direktur</span>
                 @endif
                 @if(Auth::user()->role == 'dosen')
                 <span class="nav-profile-name">Dosen</span>
@@ -213,27 +245,21 @@
       <div class="main-panel">
         <div class="content-wrapper">
           <div class="row">
-            <div class="col-md-4 grid-margin">
-             
-          </div>
-          
-          
+            @yield('cardatas')
         </div>
           <div class="row">
                   <div class="col-12 grid-margin stretch-card">
                     <div class="card">
                       <div class="card-body">
                       @yield('content')
-                      @if(Auth::user()->role == 'superadm')
+                      @if(Auth::user()->role == 'user')
                       <div class="table-responsive pt-3">
                       
                        
                         
                       </div>
-                      
-                      
-                  <!-- index.blade.php -->
-                
+          <!-- row end -->
+        </div>
         <!-- content-wrapper ends -->
         <!-- partial:./partials/_footer.html -->
        

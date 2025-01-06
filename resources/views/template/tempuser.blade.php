@@ -49,7 +49,7 @@
         </li>
          <li class="nav-item">
             <a class="nav-link">
-                <i class="mdi mdi-view-quilt menu-icon" ></i>
+                <i class="mdi mdi-view-quilt menu-icon" style="color: black" ></i>
                 <span class="menu-title" >Pengajuan MBKM</span>
             </a>
             <ul>

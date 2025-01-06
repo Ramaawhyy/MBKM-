@@ -7,30 +7,41 @@
                       @if(Auth::user()->role == 'dosen')
                       <div class="container mt-4">
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <!-- Grafik Donut -->
-                                <h5>Grafik Donut - Program MBKM</h5>
-                                <canvas id="donutChart"></canvas>
+                                <h5 class="text-center">MBKM Diambil</h5>
+                                <div style="width: 100%; max-width: 300px; margin: auto;">
+                                    <canvas id="donutChart"></canvas>
+                                </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <!-- Grafik Pie -->
-                                <h5>Grafik Pie - Program MBKM</h5>
-                                <canvas id="pieChart"></canvas>
+                                <h5 class="text-center">Grafik Pie - Program MBKM</h5>
+                                <div style="width: 100%; max-width: 300px; margin: auto;">
+                                    <canvas id="pieChart"></canvas>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row mt-4">
-                            <div class="col-md-6">
-                                <!-- Grafik Batang -->
-                                <h5>Grafik Batang - Program MBKM</h5>
-                                <canvas id="barChart"></canvas>
-                            </div>
-                            <div class="col-md-6">
-                                <!-- Grafik Garis -->
-                                <h5>Grafik Garis - Program MBKM</h5>
-                                <canvas id="lineChart"></canvas>
+                            <div class="col-md-4">
+                                <div class="row">
+                                    <div class="col-12">
+                                        <!-- Grafik Batang -->
+                                        <h5 class="text-center">Grafik Batang</h5>
+                                        <div style="width: 100%; max-width: 400px; margin: auto;">
+                                            <canvas id="barChart"></canvas>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mt-4">
+                                        <!-- Grafik Garis -->
+                                        <h5 class="text-center">Grafik Garis</h5>
+                                        <div style="width: 100%; max-width: 400px; margin: auto;">
+                                            <canvas id="lineChart"></canvas>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    
                     @endif
                     @endsection
                     
@@ -136,8 +147,8 @@
      <div class="col-md-4 grid-margin">
               <div class="card text-white bg-success" style="background-image: url('{{ asset('img/hijau.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
                   <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
-                      <h5 class="card-title" style="margin: 0;">Administrasi</h5>
-                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ isset($approvedCount) ? $approvedCount : 0 }}</span>
+                      <h5 class="card-title" style="margin: 0; font-weight: 600; color: white;">Approval Administrasi</h5>
+                      <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px; font-weight: 600;">{{ isset($approvedCount) ? $approvedCount : 0 }}</span>
                   </div>
               </div>
           </div>
@@ -145,8 +156,8 @@
           <div class="col-md-4 grid-margin">
             <div class="card text-white bg-warning" style="background-image: url('{{ asset('img/kuning.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
                 <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
-                    <h5 class="card-title" style="margin: 0;">Kegiatan MBKM</h5>
-                    <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ isset($waitingCount) ? $waitingCount : 0 }}</span>
+                    <h5 class="card-title" style="margin: 0; font-weight: 600; color: white;">Approval Kegiatan MBKM</h5>
+                    <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px; font-weight: 600;">{{ isset($waitingCount) ? $waitingCount : 0 }}</span>
                 </div>
             </div>
         </div>
@@ -154,9 +165,9 @@
         <div class="col-md-4 grid-margin">
           <div class="card text-white bg-danger" style="background-image: url('{{ asset('img/merah.png') }}'); border-radius: 20px; height: 80px; background-size: cover; background-position: center;">
               <div class="card-body" style="display: flex; justify-content: space-between; align-items: center;">
-                  <h5 class="card-title" style="margin: 0;">Matakuliah</h5>
-                  <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px;">{{ isset($rejectedCount) ? $rejectedCount : 0 }}</span>
+                  <h5 class="card-title" style="margin: 0; font-weight: 600; color: white;">Approval Matakuliah</h5>
+                  <span class="badge badge-pill bg-dark" style="padding: 10px 15px; font-size: 16px; font-weight: 600;">{{ isset($rejectedCount) ? $rejectedCount : 0 }}</span>
               </div>
           </div>
       </div>
-     @endsection
+     @endsection  

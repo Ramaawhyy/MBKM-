@@ -1,4 +1,5 @@
-@extends('template/temp1') <!-- Merujuk ke template utama -->
+@extends('template/tempdetailuser')
+<!-- Merujuk ke template utama -->
 
 @section('content')
 <div class="container">

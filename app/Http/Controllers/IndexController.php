@@ -376,6 +376,12 @@ class IndexController extends Controller
 
     public function superadm()
     {
+        $programData = DB::table('administrasis')
+    ->select('program_mbkm', DB::raw('count(*) as total'))
+    ->groupBy('program_mbkm')
+    ->get()
+    ->toArray();
+
         // Initialize counters
         $approvedCount = 0;
         $waitingCount = 0;
@@ -386,23 +392,20 @@ class IndexController extends Controller
 
         // Count each status occurrence
         foreach ($administrasiRecords as $administrasi) {
-            if ($administrasi->status === 'approved') $approvedCount++;
-            if ($administrasi->status2 === 'approved') $approvedCount++;
-            if ($administrasi->status3 === 'approved') $approvedCount++;
+            if ($administrasi->status4 === 'approved') $approvedCount++;
+           
 
-            if ($administrasi->status === 'waiting') $waitingCount++;
-            if ($administrasi->status2 === 'waiting') $waitingCount++;
-            if ($administrasi->status3 === 'waiting') $waitingCount++;
+            if ($administrasi->status4 === 'waiting') $waitingCount++;
+          
 
-            if ($administrasi->status === 'rejected') $rejectedCount++;
-            if ($administrasi->status2 === 'rejected') $rejectedCount++;
-            if ($administrasi->status3 === 'rejected') $rejectedCount++;
+            if ($administrasi->status4 === 'rejected') $rejectedCount++;
+            
         }
 
         // Retrieve the administrasi records along with the related user data
         $administrasiData = Administrasi::with('user')->get();
 
-        return view('kaprodi.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
+        return view('kaprodi.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount','programData'));
     }
     public function approvekaprodi()
     {

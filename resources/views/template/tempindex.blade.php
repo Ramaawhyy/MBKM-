@@ -48,35 +48,34 @@
         </li>
         <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('dosen') }}">
-                <i class="mdi mdi-account menu-icon"></i>
+                <i class="mdi mdi-view-quilt menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
         <li class="nav-item white-bg {{ request()->routeIs('approveadmin') ? 'active' : '' }}">
           <a class="nav-link1" href="{{ route('approveadmin') }}">
-              <i class="mdi mdi-check menu-icon" style="color: black;"></i>
+              <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
               <span class="menu-title" style="color: black;">Approval Administrasi</span>
           </a>
       </li>
       <li class="nav-item white-bg {{ request()->routeIs('approvekegiatan') ? 'active' : '' }}">
           <a class="nav-link1" href="{{ route('approvekegiatan') }}">
-              <i class="mdi mdi-calendar-check menu-icon" style="color: black;"></i>
+              <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
               <span class="menu-title" style="color: black;">Approval Pemilihan <br> Kegiatan</span>
           </a>
       </li>
       <li class="nav-item white-bg {{ request()->routeIs('approvematkul') ? 'active' : '' }}">
           <a class="nav-link1" href="{{ route('approvematkul') }}">
-              <i class="mdi mdi-book menu-icon" style="color: black;"></i>
+              <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
               <span class="menu-title" style="color: black;">Approval Mata Kuliah <br>Ekivalensi</span>
           </a>
       </li>
       <li class="nav-item white-bg {{ request()->routeIs('history') ? 'active' : '' }}">
           <a class="nav-link1" href="{{ route('history') }}">
-              <i class="mdi mdi-account-circle menu-icon" style="color: black;"></i>
+              <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
               <span class="menu-title" style="color: black;">Status</span>
           </a>
       </li>
-      
       
       
       

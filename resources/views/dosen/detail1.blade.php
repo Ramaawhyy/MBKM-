@@ -1,47 +1,51 @@
 @extends('template/temp')
 
 @section('content')
-<div class="container">
-     <h3> Doc {{ $administrasi->user->nim }}</h3>
-    <h2>Detail Administrasi</h2>
+<div class="container mt-5">
+    <!-- Header -->
+    <h4 class="mb-4">Doc {{ $administrasi->user->nim }}</h4>
 
+    <!-- Form Detail Administrasi -->
     <form action="{{ route('administrasi.update', $administrasi->id) }}" method="POST">
         @csrf
         @method('POST')
-      
-            <tr>
-                <th>Semester</th>
-                <td>
-                    <input type="text" name="semester" value="{{ $administrasi->semester }}" class="form-control" readonly>
-                </td>
-            </tr>
-            <tr>
-                <th>Nilai IPK</th>
-                <td>
-                    <input type="text" name="nilai_ipk" value="{{ $administrasi->nilai_ipk }}" class="form-control" readonly>
-                </td>
-            </tr>
-            <tr>
-                <th>Dosen Wali</th>
-                <td>
-                    <input type="text" name="dosen_wali" value="{{ $administrasi->dosen_wali }}" class="form-control" readonly>
-                </td>
-            </tr>
-            
-        
-        <br>
-        <h3>Note Administrasi</h3>
-        <textarea name="note1" class="form-control">{{ $administrasi->note1 }}</textarea>
-        
-        <br><br>
-        <button type="submit" class="btn btn-primary">Update</button>
-        <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
-        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+
+        <!-- Semester -->
+        <div class="mb-3">
+            <label for="semester" class="form-label">Semester</label>
+            <input type="text" name="semester" value="{{ $administrasi->semester }}" class="form-control" readonly>
+        </div>
+
+        <!-- Nilai IPK -->
+        <div class="mb-3">
+            <label for="nilaiIpk" class="form-label">Nilai IPK</label>
+            <input type="text" name="nilai_ipk" value="{{ $administrasi->nilai_ipk }}" class="form-control" readonly>
+        </div>
+
+        <!-- Dosen Wali -->
+        <div class="mb-3">
+            <label for="dosenWali" class="form-label">Dosen Wali</label>
+            <input type="text" name="dosen_wali" value="{{ $administrasi->dosen_wali }}" class="form-control" readonly>
+        </div>
+
+        <!-- Note Administrasi -->
+        <div class="mb-3">
+            <label for="note1" class="form-label">Note Administrasi</label>
+            <textarea name="note1" class="form-control">{{ $administrasi->note1 }}</textarea>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+            <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+        </div>
     </form>
 
-    <!-- Add links to view and download the PDF -->
-    <br><br>
-    <a href="{{ route('administrasi.view_pdf', $administrasi->id) }}" class="btn btn-secondary">View Transkrip Nilai</a>
-    <a href="{{ asset('storage/uploads/' . $administrasi->transkrip_nilai) }}" class="btn btn-secondary" download>Download Transkrip Nilai</a>
+    <!-- Links for Transkrip Nilai -->
+    <div class="mt-4">
+        <a href="{{ route('administrasi.view_pdf', $administrasi->id) }}" class="btn btn-primary me-2">Lihat</a>
+        <a href="{{ asset('storage/uploads/' . $administrasi->transkrip_nilai) }}" class="btn btn-success" download>Unduh</a>
+    </div>
 </div>
 @endsection

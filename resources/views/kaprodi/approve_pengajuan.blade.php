@@ -31,10 +31,7 @@
                 </td>
             </tr>
             
- @else
- <tr>
-                <td>Empty</td> <!-- Sequential number -->
- </tr>
+
  @endif
         @endforeach
 
