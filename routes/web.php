@@ -4,14 +4,11 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\IndexController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SesiController;
-use App\Http\Middleware\TokenAuthenticate;
-use App\Http\Controllers\ContenController;
-use App\Http\Controllers\KandidatController;
-use App\Http\Controllers\SuperadmController;
-use App\Models\event;
-use App\Models\Kandidat;
-use App\Models\token;
+use App\Http\Controllers\RegisterController;
 
+
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
 // Definisi rute untuk otentikasi
 Route::get('/login', [SesiController::class, 'index'])->name('login');
 Route::post('/login', [SesiController::class, 'login']);

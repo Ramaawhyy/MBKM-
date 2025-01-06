@@ -177,99 +177,34 @@
           <img src="{{ asset('img/image 4.png') }}" alt="Fakultas Rekayasa Industri" style="width: 300px; margin-left: 50px;">
           <h2 style="font-weight: 600; color: #D94444;">Login Sistem Informasi MBKM</h2>
         </div>
-
-        <ul class="nav nav-tabs" id="loginTabs" role="tablist">
-          <li class="nav-item">
-            <a class="nav-link active text-center" id="mahasiswa-tab" data-toggle="tab" href="#mahasiswa" role="tab" aria-controls="mahasiswa" aria-selected="true">
-              <div><i class="fas fa-graduation-cap"></i></div>
-              <span>Mahasiswa</span>
-            </a>
-          </li>
-          
-          <li class="nav-item">
-            <a class="nav-link text-center" id="dosen-tab" data-toggle="tab" href="#dosen" role="tab" aria-controls="dosen" aria-selected="false">
-              <div><i class="fas fa-user-tie"></i></div>
-              <span>Dosen Wali</span>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-center" id="kaprodi-tab" data-toggle="tab" href="#kaprodi" role="tab" aria-controls="kaprodi" aria-selected="false">
-              <div><i class="fas fa-user-tie"></i></div>
-              <span>Kaprodi</span>
-            </a>
-          </li>
-          
-        </ul>
-
-        <div class="tab-content" id="loginTabContent">
-          <div class="tab-pane fade show active" id="mahasiswa" role="tabpanel" aria-labelledby="mahasiswa-tab">
-            <div class="card">
-              <div class="card-body">
-                <form action="{{ route('login') }}" method="POST">
-                  @csrf
-                  <div class="form-group">
-                    <label for="email" style="color: white;">Email</label>
-                    <input type="email" class="form-control" value="{{ old('email') }}" name="email">
-                  </div>
-                  <div class="form-group">
-                    <label for="password" style="color: white;">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                  </div>
-                  <div class="remember-me">
-                    <div>
-                      <input type="checkbox" id="rememberMe" name="remember">
-                      <label for="rememberMe" style="color: white;">Remember Me</label>
-                    </div>
-                    <a href="{{ route('register') }}" style="color: white;">Register</a>
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-block">Masuk</button>
-                </form>
+                <div class="card">
+          <div class="card-body">
+            <form action="{{ route('register') }}" method="POST">
+              @csrf
+              <div class="form-group">
+    <label for="name" style="color: white;">Name</label>
+    <input type="text" class="form-control" value="{{ old('name') }}" name="name" required>
+</div>
+              <div class="form-group">
+                <label for="email" style="color: white;">Email</label>
+                <input type="email" class="form-control" value="{{ old('email') }}" name="email">
               </div>
-            </div>
-          </div>
-
-          <div class="tab-pane fade" id="dosen" role="tabpanel" aria-labelledby="dosen-tab">
-            <div class="card">
-              <div class="card-body">
-                <form action="{{ route('login') }}" method="POST" class="fade-in">
-                  @csrf
-                  <div class="form-group">
-                    <label for="email" style="color: white;">Email</label>
-                    <input type="email" class="form-control" value="{{ old('email') }}" name="email">
-                  </div>
-                  <div class="form-group">
-                    <label for="password" style="color: white;">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-block">Masuk</button>
-                </form>
+              <div class="form-group">
+                <label for="password" style="color: white;">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
               </div>
-            </div>
-          </div>
-
-          <div class="tab-pane fade" id="kaprodi" role="tabpanel" aria-labelledby="kaprodi-tab">
-            <div class="card">
-              <div class="card-body">
-                <form action="{{ route('login') }}" method="POST" class="fade-in">
-                  @csrf
-                  <div class="form-group">
-                    <label for="email" style="color: white;">Email</label>
-                    <input type="email" class="form-control" value="{{ old('email') }}" name="email">
-                  </div>
-                  <div class="form-group">
-                    <label for="password" style="color: white;">Password</label>
-                    <input type="password" class="form-control" id="password" name="password">
-                  </div>
-                  <button type="submit" class="btn btn-primary btn-block">Masuk</button>
-                </form>
+              <div class="form-group">
+                <label for="nim" style="color: white;">NIM</label>
+                <input type="text" class="form-control" id="nim" name="nim">
               </div>
-            </div>
+              <button type="submit" class="btn btn-primary btn-block">Register</button>
+            </form>
           </div>
         </div>
       </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
       $(document).ready(function() {
