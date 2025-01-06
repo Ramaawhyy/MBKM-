@@ -47,31 +47,41 @@
                 <span class="menu-title" >Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}"  href="{{ route('user.tambahsop') }}" style="background-color: white;">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title" style="color: black;">Administrasi</span>
+         <li class="nav-item">
+            <a class="nav-link">
+                <i class="mdi mdi-view-quilt menu-icon" ></i>
+                <span class="menu-title" >Pengajuan MBKM</span>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}"  href="{{ route('user.pemilihankegiatan') }}" style="background-color: white;">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title" style="color: black;">Pemilihan Kegiatan</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}"  href="{{ route('user.matakuliah') }}" style="background-color: white;">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title" style="color: black;">Mata Kuliah Ekivalensi</span>
-            </a>
-        </li>
-        <li class="nav-item">
+            <ul>
+
+    <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}" href="{{ route('user.tambahsop') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
+        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+        <span class="menu-title" style="color: black;">Administrasi</span>
+    </a>
+
+
+    <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}" href="{{ route('user.pemilihankegiatan') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
+        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+        <span class="menu-title" style="color: black;">Pemilihan Kegiatan</span>
+    </a>
+
+
+
+    <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}" href="{{ route('user.matakuliah') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
+        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+        <span class="menu-title" style="color: black;">Mata Kuliah Ekivalensi</span>
+    </a>
+
+            </ul>
+              <li class="nav-item">
             <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}" style="background-color: white;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
                 <span class="menu-title" style="color: black;">Status</span>
             </a>
         </li>
       
+        </li>
+       
         
       
       

@@ -19,15 +19,15 @@ class IndexController extends Controller
     public function index()
     {
         $programs = Administrasi::select('program_mbkm')
-        ->groupBy('program_mbkm')
-        ->selectRaw('count(*) as total, program_mbkm')
-        ->get();
+            ->groupBy('program_mbkm')
+            ->selectRaw('count(*) as total, program_mbkm')
+            ->get();
 
-    $programData = $programs->mapWithKeys(function ($item) {
-        return [$item['program_mbkm'] => $item['total']];
-    });
+        $programData = $programs->mapWithKeys(function ($item) {
+            return [$item['program_mbkm'] => $item['total']];
+        });
 
-    return view('index', compact('programData'));
+        return view('index', compact('programData'));
     }
     public function user()
     {
@@ -103,36 +103,7 @@ class IndexController extends Controller
 
         return view('user.status', compact('administrasiData'));
     }
-    public function usersopstore(Request $request)
-    {
-        $request->validate([
-            'nama' => 'required',
-            'status' => 'required',
-            'file' => 'required|mimes:pdf|max:2048',
-        ]);
-
-        $file = $request->file('file');
-        $nama_file = time() . "_" . $file->getClientOriginalName();
-        $tujuan_upload = 'public/uploads';
-        $file->storeAs($tujuan_upload, $nama_file);
-
-        $sop = new SOP([
-            'nama' => $request->input('nama'),
-            'klasifikasi_dokumen' => 'Tidak Ada',
-            'nomor_dokumen' => 'Tidak Ada',
-            'persetujuan_sekretaris' => 'Belum disetujui',
-            'persetujuan_mr' => 'Belum disetujui',
-            'status_pengesahan_direktur' => 'Belum disetujui',
-            'file' => $nama_file,
-        ]);
-
-        $sop->status = $request->input('status'); // Tetapkan nilai status setelah validasi
-
-        $sop->save();
-
-        return redirect('index/user')->with('success', 'Data SOP berhasil disimpan.');
-    }
-    public function administrasi(Request $request)
+       public function administrasi(Request $request)
     {
         $request->validate([
             'semester' => 'required|string',
@@ -154,13 +125,13 @@ class IndexController extends Controller
             'status' => 'waiting',
             'status2' => 'null',
             'status3' => 'null',
-            'status4'=> 'waiting',
+            'status4' => 'waiting',
             'user_id' => Auth::id(), // Set the user_id to the currently logged-in user's ID
         ]);
 
         $administrasi->save();
 
-        return redirect('index/user')->with('success', 'Data Administrasi berhasil disimpan.');
+        return redirect('index/user/tambahsop')->with('success', 'Data Administrasi berhasil disimpan.');
     }
     public function storeProgramMbkm(Request $request)
     {
@@ -178,10 +149,10 @@ class IndexController extends Controller
             $administrasi->status2 = 'waiting'; // Update status2 to 'waiting'
             $administrasi->save();
 
-            return redirect()->route('user')->with('success', 'Program MBKM berhasil disimpan.');
+            return redirect()->route('user.pemilihankegiatan')->with('success', 'Program MBKM berhasil disimpan.');
         }
 
-        return redirect()->route('user')->with('error', 'Tidak ada data administrasi yang ditemukan.');
+        return redirect()->route('user.pemilihankegiatan')->with('error', 'Tidak ada data administrasi yang ditemukan.');
     }
 
     public function storeMataKuliah(Request $request)
@@ -211,7 +182,7 @@ class IndexController extends Controller
             return redirect()->route('user')->with('success', 'Mata Kuliah berhasil disimpan.');
         }
 
-        return redirect()->route('user')->with('error', 'Tidak ada data administrasi yang ditemukan.');
+        return redirect()->route('user.status')->with('error', 'Tidak ada data administrasi yang ditemukan.');
     }
 
 
@@ -220,12 +191,12 @@ class IndexController extends Controller
     //DOSEN !!!!!!!!!!!!!!!!!!!!!!
 
     public function dosen()
-    { 
+    {
         $programData = DB::table('administrasis')
-        ->select('program_mbkm', DB::raw('count(*) as total'))
-        ->groupBy('program_mbkm')
-        ->get();
-          // Initialize counters
+            ->select('program_mbkm', DB::raw('count(*) as total'))
+            ->groupBy('program_mbkm')
+            ->get();
+        // Initialize counters
         $approvedCount = 0;
         $waitingCount = 0;
         $rejectedCount = 0;
