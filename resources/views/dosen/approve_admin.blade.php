@@ -22,7 +22,7 @@
     @if ($administrasi->status === 'waiting')
             <tr>
                 <td>{{ $index + 1 }}</td> <!-- Sequential number -->
-                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                 <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
                 <td>{{ $administrasi->status }}</td> <!-- Status -->
                 <td>
                    <a href="{{ route('dosen.detail1', $administrasi->id) }}" class="btn btn-info">Detail </a>
@@ -31,10 +31,7 @@
                 </td>
             </tr>
             
- @else
- <tr>
-                <td>Empty</td> <!-- Sequential number -->
- </tr>
+
  @endif
         @endforeach
 

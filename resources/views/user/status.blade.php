@@ -58,12 +58,13 @@
                     @if($administrasi->user_id === Auth::id())
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $administrasi->program_mbkm }}</td>
+                             <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
                             <td>
                                 <span class="
-                                    @if($administrasi->status == 'Approve') status-approve 
-                                    @elseif($administrasi->status == 'Waiting') status-waiting 
-                                    @elseif($administrasi->status == 'Rejected') status-rejected 
+                                    @if($administrasi->status == 'approve') status-approve 
+                                    @elseif($administrasi->status == 'waiting') status-waiting 
+                                     @elseif($administrasi->status == 'null') status-waiting 
+                                    @elseif($administrasi->status == 'rejected') status-rejected 
                                     @else status-unknown @endif">
                                     {{ $administrasi->status }}
                                 </span>
@@ -76,12 +77,13 @@
                         </tr>
                         <tr> 
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $administrasi->program_mbkm }}</td>
+                            <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
                             <td>
                                 <span class="
-                                    @if($administrasi->status2 == 'Approve') status-approve 
-                                    @elseif($administrasi->status2 == 'Waiting') status-waiting 
-                                    @elseif($administrasi->status2 == 'Rejected') status-rejected 
+                                    @if($administrasi->status2 == 'approve') status-approve 
+                                    @elseif($administrasi->status2 == 'waiting') status-waiting 
+                                     @elseif($administrasi->status2 == 'null') status-waiting 
+                                    @elseif($administrasi->status2 == 'rejected') status-rejected 
                                     @else status-unknown @endif">
                                     {{ $administrasi->status2 }}
                                 </span>
@@ -94,12 +96,13 @@
                         </tr>
                         <tr>
                             <td>{{ $index + 1 }}</td>
-                            <td>{{ $administrasi->program_mbkm }}</td>
+                            <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
                             <td>
                                 <span class="
-                                    @if($administrasi->status3 == 'Approve') status-approve 
-                                    @elseif($administrasi->status3 == 'Waiting') status-waiting 
-                                    @elseif($administrasi->status3 == 'Rejected') status-rejected 
+                                    @if($administrasi->status3 == 'approve') status-approve 
+                                    @elseif($administrasi->status3 == 'waiting') status-waiting 
+                                     @elseif($administrasi->status3 == 'null') status-waiting 
+                                    @elseif($administrasi->status3 == 'rejected') status-rejected 
                                     @else status-unknown @endif">
                                     {{ $administrasi->status3 }}
                                 </span>

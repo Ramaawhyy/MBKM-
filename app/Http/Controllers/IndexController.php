@@ -40,6 +40,8 @@ class IndexController extends Controller
 
         // Retrieve all administrasi records for the logged-in user
         $administrasiRecords = Administrasi::where('user_id', $userId)->get();
+        // Retrieve the administrasi records along with the related user data
+        $administrasiDatas = Administrasi::with('user')->get();
 
         // Count each status occurrence and determine class for each status
         $administrasiData = $administrasiRecords->map(function ($administrasi) use (&$approvedCount, &$waitingCount, &$rejectedCount) {
@@ -62,7 +64,7 @@ class IndexController extends Controller
             return $administrasi;
         });
 
-        return view('user.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount'));
+        return view('user.index', compact('administrasiData', 'administrasiDatas', 'approvedCount', 'waitingCount', 'rejectedCount'));
     }
 
     private function getStatusClass($status)
@@ -103,7 +105,7 @@ class IndexController extends Controller
 
         return view('user.status', compact('administrasiData'));
     }
-       public function administrasi(Request $request)
+    public function administrasi(Request $request)
     {
         $request->validate([
             'semester' => 'required|string',
@@ -377,10 +379,10 @@ class IndexController extends Controller
     public function superadm()
     {
         $programData = DB::table('administrasis')
-    ->select('program_mbkm', DB::raw('count(*) as total'))
-    ->groupBy('program_mbkm')
-    ->get()
-    ->toArray();
+            ->select('program_mbkm', DB::raw('count(*) as total'))
+            ->groupBy('program_mbkm')
+            ->get()
+            ->toArray();
 
         // Initialize counters
         $approvedCount = 0;
@@ -393,19 +395,18 @@ class IndexController extends Controller
         // Count each status occurrence
         foreach ($administrasiRecords as $administrasi) {
             if ($administrasi->status4 === 'approved') $approvedCount++;
-           
+
 
             if ($administrasi->status4 === 'waiting') $waitingCount++;
-          
+
 
             if ($administrasi->status4 === 'rejected') $rejectedCount++;
-            
         }
 
         // Retrieve the administrasi records along with the related user data
         $administrasiData = Administrasi::with('user')->get();
 
-        return view('kaprodi.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount','programData'));
+        return view('kaprodi.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount', 'programData'));
     }
     public function approvekaprodi()
     {

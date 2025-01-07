@@ -42,10 +42,11 @@
           <span></span>
         </li>
         @if(Auth::user()->role == 'admin' || Auth::user()->role == 'superadm'|| Auth::user()->role == 'dosen'|| Auth::user()->role == 'user')
-    <li class="nav-item" {{ request()->routeIs('historykaprodi') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ route('historykaprodi') }}">
+  
+        <li class="nav-item" {{ request()->routeIs('superadm') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ route('superadm') }}">
             <i class="mdi mdi-view-quilt menu-icon"></i>
-            <span class="menu-title">History</span>
+            <span class="menu-title">Dashboard</span>
         </a>
     </li>
     <li class="nav-item {{ request()->routeIs('kaprodi.approve') ? 'active' : '' }}" style="background-color: white;">
@@ -54,6 +55,13 @@
             <span class="menu-title" style="color: black;">Approval Pengajuan <br>MBKM</span>
         </a>
     </li>
+      <li class="nav-item {{ request()->routeIs('historykaprodi') ? 'active' : '' }}" style="background-color: white;">
+        <a class="nav-link1" href="{{ route('historykaprodi') }}">
+            <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+            <span class="menu-title" style="color: black;">History 
+        </a>
+    </li>
+      
 @endif
 
         

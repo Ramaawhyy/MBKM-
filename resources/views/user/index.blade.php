@@ -1,6 +1,39 @@
 @extends('template.tempuser') 
 
 @section('content')
+<style>
+    .status-approve {
+        background-color: green;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .status-waiting {
+        background-color: yellow;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .status-rejected {
+        background-color: red;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .status-unknown {
+        background-color: grey;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+</style>
                     <div class="card">
                       <div class="card-body">
                       @if(Auth::user()->role == 'user')
@@ -15,13 +48,14 @@
     </tr>
 </thead>
 <tbody>
-     @foreach ($administrasiData as $index => $administrasi)
+     @foreach ($administrasiDatas as $index => $administrasi)
    
             <tr>
                 <td>{{ $index + 1 }}</td> <!-- Sequential number -->
-                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td> <!-- Jenis Kegiatan -->
                 <td>{{ $administrasi->created_at }}</td>
-                <td>{{ $administrasi->status }}</td> <!-- Status -->
+                <td>{{ $administrasi->status }}
+                            </td>
                 <td>
                     <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
                         Detail
@@ -30,9 +64,11 @@
             </tr>
             <tr> 
                 <td>{{ $index + 1 }}</td> <!-- Sequential number -->
-                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td> <!-- Jenis Kegiatan -->
                  <td>{{ $administrasi->created_at }}</td>
-                <td>{{ $administrasi->status2 }}</td> <!-- Status -->
+                 <td>
+                               {{ $administrasi->status2 }}
+                            </td>
                 <td>
                     <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
                         Detail
@@ -41,9 +77,11 @@
             </tr>
             <tr>
                 <td>{{ $index + 1 }}</td> <!-- Sequential number -->
-                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td> <!-- Jenis Kegiatan -->
                  <td>{{ $administrasi->created_at }}</td>
-                <td>{{ $administrasi->status3 }}</td> <!-- Status -->
+                <td>
+                              {{ $administrasi->status3 }}
+                            </td>
                 <td>
                     <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
                         Detail

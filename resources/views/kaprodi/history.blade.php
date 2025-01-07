@@ -1,6 +1,39 @@
 @extends('template/temp2') <!-- Merujuk ke template utama -->
 
 @section('content')
+<style>
+    .status-approve {
+        background-color: green;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .status-waiting {
+        background-color: yellow;
+        color: black;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .status-rejected {
+        background-color: red;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+
+    .status-unknown {
+        background-color: grey;
+        color: white;
+        padding: 5px 10px;
+        border-radius: 5px;
+        display: inline-block;
+    }
+</style>
 <div class="container">
     @if(Auth::user()->role == 'superadm')
         <div class="custom-buttons-container">
@@ -13,18 +46,31 @@
       <tr>
         <th>No</th>
         <th>Jenis Kegiatan</th>
+        <th>Date</th>
         <th>Status</th>
         <th>Aksi</th>
     </tr>
 </thead>
 <tbody>
       @foreach ($administrasiData as $index => $administrasi)
-   
+     @if(
+      
+        ($administrasi->status3 !== null && in_array($administrasi->status3, ['approve', 'rejected']))
+    )
             <tr>
                 <td>{{ $index + 1 }}</td> <!-- Sequential number -->
-                <td>{{ $administrasi->program_mbkm }}</td> <!-- Jenis Kegiatan -->
+                <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
                 <td>{{ $administrasi->created_at }}</td>
-                <td>{{ $administrasi->status4 }}</td> <!-- Status -->
+                <td>
+                <span class="
+                    @if($administrasi->status4 == 'approve') status-approve 
+                    @elseif($administrasi->status4 == 'waiting') status-waiting 
+                    @elseif($administrasi->status4 == 'null') status-waiting 
+                    @elseif($administrasi->status4 == 'rejected') status-rejected 
+                    @else status-unknown @endif">
+                    {{ $administrasi->status3 }}
+                </span>
+            </td>
                 <td>
                     <a href="{{ route('kaprodi.detail4', $administrasi->id) }}" class="btn btn-info">Detail </a>
                  
@@ -32,7 +78,7 @@
                 </td>
             </tr>
            
-              
+              @endif
         @endforeach
 
 
