@@ -58,15 +58,6 @@
         <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
         <span class="menu-title" style="color: black;">Administrasi</span>
     </a>
-
-
-    <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}" href="{{ route('user.pemilihankegiatan') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
-        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-        <span class="menu-title" style="color: black;">Pemilihan Kegiatan</span>
-    </a>
-
-
-
     <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}" href="{{ route('user.matakuliah') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
         <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
         <span class="menu-title" style="color: black;">Mata Kuliah Ekivalensi</span>
@@ -212,34 +203,15 @@
               </div>
             </li>
           </ul>
-          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="mdi mdi-menu"></span>
-          </button>
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                @if(Auth::user()->role == 'user')
-                <span class="nav-profile-name">Mahasiswa</span>
-                @endif
-                @if(Auth::user()->role == 'admin')
-                <span class="nav-profile-name">Management Representative</span>
-                @endif
-                @if(Auth::user()->role == 'superadm')
-                <span class="nav-profile-name">Direktur</span>
-                @endif
-                @if(Auth::user()->role == 'dosen')
-                <span class="nav-profile-name">Dosen</span>
-                @endif
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item"  href="{{ route('logout') }}" >
-                  <i class="mdi mdi-logout text-primary"></i>
-                  Logout
-                </a>
-              </div>
-        </div>
-       
-      </nav>
+            <button class="btn btn-light" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    <i class="mdi mdi-logout text-dark"></i> Logout
+</button>
+
+<!-- Hidden Logout Form -->
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+     </nav>
       
       <!-- partial -->
       <div class="main-panel">

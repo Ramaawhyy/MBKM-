@@ -46,24 +46,40 @@
           <img id="sidebarImage" src="{{ asset('template/images/download-removebg-preview.png') }}" alt="Image" class="img-fluid right-align">
           <span></span>
         </li>
+          @if(Auth::check() && Auth::user()->role === 'dosen')
         <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
             <a class="nav-link" href="{{ route('dosen') }}">
                 <i class="mdi mdi-view-quilt menu-icon"></i>
                 <span class="menu-title">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item white-bg {{ request()->routeIs('approveadmin') ? 'active' : '' }}">
-          <a class="nav-link1" href="{{ route('approveadmin') }}">
-              <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-              <span class="menu-title" style="color: black;">Approval Administrasi</span>
+        @endif
+            @if(Auth::check() && Auth::user()->role === 'admin')
+        <li class="nav-item {{ request()->routeIs('admin') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('admin') }}">
+              <i class="mdi mdi-account menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
           </a>
       </li>
-      <li class="nav-item white-bg {{ request()->routeIs('approvekegiatan') ? 'active' : '' }}">
-          <a class="nav-link1" href="{{ route('approvekegiatan') }}">
+      @endif
+    
+          @if(Auth::check() && Auth::user()->role === 'admin')
+    <li class="nav-item white-bg {{ request()->routeIs('daftaruser') ? 'active' : '' }}">
+          <a class="nav-link1" href="{{ route('daftaruser') }}">
               <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-              <span class="menu-title" style="color: black;">Approval Pemilihan <br> Kegiatan</span>
+              <span class="menu-title" style="color: black;">Daftar User</span>
           </a>
       </li>
+      @endif
+      @if(Auth::check() && Auth::user()->role === 'admin')
+    <li class="nav-item white-bg {{ request()->routeIs('approveadmin') ? 'active' : '' }}">
+        <a class="nav-link1" href="{{ route('approveadmin') }}">
+            <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+            <span class="menu-title" style="color: black;">Approval Administrasi</span>
+        </a>
+    </li>
+@endif
+   
       <li class="nav-item white-bg {{ request()->routeIs('approvematkul') ? 'active' : '' }}">
           <a class="nav-link1" href="{{ route('approvematkul') }}">
               <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
@@ -101,7 +117,7 @@
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Unit Perusahaan</h4>
                 @endif
                 @if(Auth::user()->role == 'admin')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Management Representative</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Admin Admin</h4>
                 @endif
                 @if(Auth::user()->role == 'superadm')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Direktur</h4>
@@ -216,7 +232,7 @@
                 <span class="nav-profile-name">Unit Perusahaan</span>
                 @endif
                 @if(Auth::user()->role == 'admin')
-                <span class="nav-profile-name">Management Representative</span>
+                <span class="nav-profile-name"> Admin</span>
                 @endif
                 @if(Auth::user()->role == 'superadm')
                 <span class="nav-profile-name">Direktur</span>
@@ -249,7 +265,7 @@
                     <div class="card">
                       <div class="card-body">
                       @yield('content')
-                      @if(Auth::user()->role == 'dosen')
+                      @if(Auth::user()->role == 'dosen' || Auth::user()->role == 'admin' )
                       <div class="table-responsive pt-3">
                       
                        

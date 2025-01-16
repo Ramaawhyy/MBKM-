@@ -54,67 +54,55 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($administrasiData as $index => $administrasi)
-                    @if($administrasi->user_id === Auth::id())
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                             <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
-                            <td>
-                                <span class="
-                                    @if($administrasi->status == 'approve') status-approve 
-                                    @elseif($administrasi->status == 'waiting') status-waiting 
-                                     @elseif($administrasi->status == 'null') status-waiting 
-                                    @elseif($administrasi->status == 'rejected') status-rejected 
-                                    @else status-unknown @endif">
-                                    {{ $administrasi->status }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
-                                    Detail
-                                </a>
-                            </td>
-                        </tr>
-                        <tr> 
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
-                            <td>
-                                <span class="
-                                    @if($administrasi->status2 == 'approve') status-approve 
-                                    @elseif($administrasi->status2 == 'waiting') status-waiting 
-                                     @elseif($administrasi->status2 == 'null') status-waiting 
-                                    @elseif($administrasi->status2 == 'rejected') status-rejected 
-                                    @else status-unknown @endif">
-                                    {{ $administrasi->status2 }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
-                                    Detail
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
-                            <td>
-                                <span class="
-                                    @if($administrasi->status3 == 'approve') status-approve 
-                                    @elseif($administrasi->status3 == 'waiting') status-waiting 
-                                     @elseif($administrasi->status3 == 'null') status-waiting 
-                                    @elseif($administrasi->status3 == 'rejected') status-rejected 
-                                    @else status-unknown @endif">
-                                    {{ $administrasi->status3 }}
-                                </span>
-                            </td>
-                            <td>
-                                <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
-                                    Detail
-                                </a>
-                            </td>
-                        </tr>
-                    @endif
-                @endforeach
+          @foreach ($administrasiData as $index => $administrasi)
+    @if($administrasi->user_id === Auth::id())
+        @if(in_array($administrasi->status, ['approve', 'waiting', 'rejected']))
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
+                <td>
+                    <span class="
+                        @if($administrasi->status == 'approve') status-approve 
+                        @elseif($administrasi->status == 'waiting') status-waiting 
+                        @elseif($administrasi->status == 'rejected') status-rejected 
+                        @else status-unknown @endif">
+                        {{ $administrasi->status }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
+                        Detail
+                    </a>
+                </td>
+            </tr>
+        @endif
+    @endif
+@endforeach
+
+@foreach ($administrasiData as $index => $administrasi)
+    @if($administrasi->user_id === Auth::id())
+        @if(in_array($administrasi->status3, ['approve', 'waiting', 'rejected']))
+            <tr>
+                <td>{{ $index + 1 }}</td>
+                <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
+                <td>
+                    <span class="
+                        @if($administrasi->status3 == 'approve') status-approve 
+                        @elseif($administrasi->status3 == 'waiting') status-waiting 
+                        @elseif($administrasi->status3 == 'rejected') status-rejected 
+                        @else status-unknown @endif">
+                        {{ $administrasi->status3 }}
+                    </span>
+                </td>
+                <td>
+                    <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
+                        Detail
+                    </a>
+                </td>
+            </tr>
+        @endif
+    @endif
+@endforeach
             </tbody>
         </table>
     @endif

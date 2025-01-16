@@ -67,7 +67,7 @@
                 <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td> <!-- Jenis Kegiatan -->
                  <td>{{ $administrasi->created_at }}</td>
                  <td>
-                               {{ $administrasi->status2 }}
+                               {{ $administrasi->status3 }}
                             </td>
                 <td>
                     <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">
@@ -80,7 +80,7 @@
                 <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td> <!-- Jenis Kegiatan -->
                  <td>{{ $administrasi->created_at }}</td>
                 <td>
-                              {{ $administrasi->status3 }}
+                              {{ $administrasi->status4 }}
                             </td>
                 <td>
                     <a href="{{ route('administrasi.show', $administrasi->id) }}" class="btn btn-info btn-xs">

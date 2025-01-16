@@ -29,6 +29,10 @@ class Administrasi extends Model
         'note1',
         'note2',
         'note3',
+        'nama_penyelenggara',
+        'no_hp',
+        'deskripsi_kegiatan',
+        'capaian_pembelajaran',
         ];
 
     public function user()

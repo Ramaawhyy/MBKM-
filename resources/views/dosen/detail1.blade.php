@@ -27,6 +27,10 @@
             <label for="dosenWali" class="form-label">Dosen Wali</label>
             <input type="text" name="dosen_wali" value="{{ $administrasi->dosen_wali }}" class="form-control" readonly>
         </div>
+        <div class="mb-3">
+            <label for="dosenWali" class="form-label">Kegiatan MBKM</label>
+            <input type="text" name="dosen_wali" value="{{ $administrasi->program_mbkm }}" class="form-control" readonly>
+        </div>
 
         <!-- Note Administrasi -->
         <div class="mb-3">

@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    @if(Auth::user()->role == 'dosen')
+    @if(Auth::user()->role == 'admin')
         <div class="custom-buttons-container">
             <!-- Back button -->
         </div>

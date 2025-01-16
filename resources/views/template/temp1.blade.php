@@ -34,7 +34,7 @@
       </div>
     </div>
     <!-- partial:./partials/_sidebar.html -->
-    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+   <nav class="sidebar sidebar-offcanvas" id="sidebar">
       <ul class="nav">
         <li class="nav-item sidebar-category">
           <!-- Gambar yang akan disembunyikan -->
@@ -42,36 +42,37 @@
           <span></span>
         </li>
         <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user') ? 'active' : '' }}" href="{{ route('user') }}">
+            <a class="nav-link1 {{ request()->routeIs('user') ? 'active' : '' }}" href="{{ route('user') }}" style="color: black;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Dashboard</span>
+                <span class="menu-title" style="color: black;">Dashboard</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}"  href="{{ route('user.tambahsop') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Administrasi</span>
+         <li class="nav-item">
+            <a class="nav-link">
+                <i class="mdi mdi-view-quilt menu-icon" style="color: black" ></i>
+                <span class="menu-title" >Pengajuan MBKM</span>
             </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}"  href="{{ route('user.pemilihankegiatan') }}">
+            <ul>
+
+    <a class="nav-link {{ request()->routeIs('user.tambahsop') ? 'active' : '' }}" href="{{ route('user.tambahsop') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
+        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+        <span class="menu-title" style="color: black;">Administrasi</span>
+    </a>
+    <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}" href="{{ route('user.matakuliah') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
+        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+        <span class="menu-title" style="color: black;">Mata Kuliah Ekivalensi</span>
+    </a>
+
+            </ul>
+              <li class="nav-item">
+            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}" style="background-color: white;">
                 <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Pemilihan Kegiatan</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}"  href="{{ route('user.matakuliah') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Mata Kuliah Ekivalensi</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link {{ request()->routeIs('user.status') ? 'active' : '' }}"  href="{{ route('user.status') }}">
-                <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-                <span class="menu-title">Status</span>
+                <span class="menu-title" style="color: black;">Status</span>
             </a>
         </li>
       
+        </li>
+       
         
       
       
@@ -202,33 +203,14 @@
               </div>
             </li>
           </ul>
-          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="mdi mdi-menu"></span>
-          </button>
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                @if(Auth::user()->role == 'user')
-                <span class="nav-profile-name">Mahasiswa</span>
-                @endif
-                @if(Auth::user()->role == 'admin')
-                <span class="nav-profile-name">Management Representative</span>
-                @endif
-                @if(Auth::user()->role == 'superadm')
-                <span class="nav-profile-name">Direktur</span>
-                @endif
-                @if(Auth::user()->role == 'dosen')
-                <span class="nav-profile-name">Dosen</span>
-                @endif
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item"  href="{{ route('logout') }}" >
-                  <i class="mdi mdi-logout text-primary"></i>
-                  Logout
-                </a>
-              </div>
-        </div>
-       
+            <button class="btn btn-light" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    <i class="mdi mdi-logout text-dark"></i> Logout
+</button>
+
+<!-- Hidden Logout Form -->
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
       </nav>
       
       <!-- partial -->

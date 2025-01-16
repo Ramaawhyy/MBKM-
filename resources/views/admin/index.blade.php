@@ -4,7 +4,7 @@
    
                     <div class="card">
                       <div class="card-body">
-                      @if(Auth::user()->role == 'dosen')
+                      @if(Auth::user()->role == 'admin')
                       <div class="container mt-4">
                         <div class="row">
                             <div class="col-md-4">

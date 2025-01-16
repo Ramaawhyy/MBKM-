@@ -19,11 +19,11 @@
 </thead>
 <tbody>
    @foreach ($administrasiData as $index => $administrasi)
-    @if ($administrasi->status4 === 'waiting')
+       @if ($administrasi->status4 === 'waiting')
             <tr>
                 <td>{{ $index + 1 }}</td> <!-- Sequential number -->
                <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
-                <td>{{ $administrasi->status3 }}</td> <!-- Status -->
+                <td>{{ $administrasi->status4 }}</td> <!-- Status -->
                 <td>
                    <a href="{{ route('kaprodi.detail3', $administrasi->id) }}" class="btn btn-info">Detail </a>
                 

@@ -12,7 +12,7 @@ Route::post('/register', [RegisterController::class, 'register']);
 // Definisi rute untuk otentikasi
 Route::get('/login', [SesiController::class, 'index'])->name('login');
 Route::post('/login', [SesiController::class, 'login']);
-
+Route::get('/logout', [SesiController::class, 'logout'])->name('logout');
 
 
 
@@ -22,7 +22,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/index', [IndexController::class, 'index']);
     Route::get('/index/admin', [IndexController::class, 'admin'])->middleware('userAkases:admin')->name('admin');
-    Route::get('/index/admin/edit/{id}', [IndexController::class, 'adminsopedit'])->name('mr.sop.edit');
+    Route::get('/index/admin/users', [IndexController::class, 'daftaruser'])->name('daftaruser');
+    Route::get('/admin/users/create', [IndexController::class, 'create'])->name('admin.user.create');
+    Route::post('/admin/users', [IndexController::class, 'store'])->name('admin.user.store');
+    Route::get('/admin/users/{id}/edit', [IndexController::class, 'edit'])->name('admin.user.edit');
+    Route::put('/admin/users/{id}', [IndexController::class, 'update'])->name('admin.user.update');
+    Route::delete('/admin/users/{id}', [IndexController::class, 'destroy'])->name('admin.user.delete');
 
     
     // Dosen
@@ -64,7 +69,7 @@ Route::middleware(['auth'])->group(function () {
 
 
 
-    Route::get('/logout', [SesiController::class, 'logout'])->name('logout');
+ 
    
 });
 

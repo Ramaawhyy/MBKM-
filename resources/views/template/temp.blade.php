@@ -42,24 +42,39 @@
           <span></span>
         </li>
         @yield('navbaru')
+         @if(Auth::check() && Auth::user()->role === 'dosen')
         <li class="nav-item {{ request()->routeIs('dosen') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('dosen') }}">
               <i class="mdi mdi-account menu-icon"></i>
               <span class="menu-title">Dashboard</span>
           </a>
       </li>
+      @endif
+        @if(Auth::check() && Auth::user()->role === 'admin')
+        <li class="nav-item {{ request()->routeIs('admin') ? 'active' : '' }}">
+          <a class="nav-link" href="{{ route('admin') }}">
+              <i class="mdi mdi-account menu-icon"></i>
+              <span class="menu-title">Dashboard</span>
+          </a>
+      </li>
+      @endif
+    
+           @if(Auth::check() && Auth::user()->role === 'admin')
+    <li class="nav-item white-bg {{ request()->routeIs('daftaruser') ? 'active' : '' }}">
+          <a class="nav-link1" href="{{ route('daftaruser') }}">
+              <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
+              <span class="menu-title" style="color: black;">Daftar User</span>
+          </a>
+      </li>
+      @endif
+      @if(Auth::check() && Auth::user()->role === 'admin')
       <li class="nav-item {{ request()->routeIs('approveadmin') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('approveadmin') }}">
               <i class="mdi mdi-check menu-icon"></i>
               <span class="menu-title">Approval Administrasi</span>
           </a>
       </li>
-      <li class="nav-item {{ request()->routeIs('approvekegiatan') ? 'active' : '' }}">
-          <a class="nav-link" href="{{ route('approvekegiatan') }}">
-              <i class="mdi mdi-calendar-check menu-icon"></i>
-              <span class="menu-title">Approval Pemilihan <br> Kegiatan</span>
-          </a>
-      </li>
+      @endif
       <li class="nav-item {{ request()->routeIs('approvematkul') ? 'active' : '' }}">
           <a class="nav-link" href="{{ route('approvematkul') }}">
               <i class="mdi mdi-book menu-icon"></i>
@@ -98,7 +113,7 @@
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Unit Perusahaan</h4>
                 @endif
                 @if(Auth::user()->role == 'admin')
-          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Management Representative</h4>
+          <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, admin</h4>
                 @endif
                 @if(Auth::user()->role == 'superadm')
           <h4 class="font-weight-bold mb-0 d-none d-md-block mt-1" > Welcome back, Direktur</h4>
@@ -203,32 +218,15 @@
               </div>
             </li>
           </ul>
-          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="mdi mdi-menu"></span>
-          </button>
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                @if(Auth::user()->role == 'user')
-                <span class="nav-profile-name">Unit Perusahaan</span>
-                @endif
-                @if(Auth::user()->role == 'admin')
-                <span class="nav-profile-name">Management Representative</span>
-                @endif
-                @if(Auth::user()->role == 'superadm')
-                <span class="nav-profile-name">Direktur</span>
-                @endif
-                @if(Auth::user()->role == 'dosen')
-                <span class="nav-profile-name">Dosen</span>
-                @endif
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item"  href="{{ route('logout') }}" >
-                  <i class="mdi mdi-logout text-primary"></i>
-                  Logout
-                </a>
-              </div>
-        </div>
+        <button class="btn btn-light" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    <i class="mdi mdi-logout text-dark"></i> Logout
+</button>
+
+<!-- Hidden Logout Form -->
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+    <!-- Other navbar content -->
        
       </nav>
       

@@ -4,15 +4,13 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Models\Event;
-use App\Models\Kandidat;
-use App\Models\Token;
-use App\Models\sop;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use App\Models\Administrasi;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class IndexController extends Controller
 {
@@ -82,15 +80,42 @@ class IndexController extends Controller
     }
     public function createsop()
     {
-        return view('user.tambah');
+        // Fetch users with the role 'dosen'
+        $dosenList = User::where('role', 'dosen')->get();
+        $userId = Auth::id();
+
+        // Check if there are any records with status not "Approve" or "Rejected"
+        $pendingDataExists = Administrasi::where('user_id', $userId)
+            ->where(function ($query) {
+                $query->whereNotIn('status', ['approve', 'rejected'])
+                    ->orWhereNotIn('status3', ['approve', 'rejected']);
+            })
+            ->exists();
+
+        return view('user.tambah', compact('dosenList', 'pendingDataExists'));
     }
-    public function createpemilihankegiatan()
-    {
-        return view('user.pemilihan_kegiatan');
-    }
+
     public function creatematakuliah()
     {
-        return view('user.mata_kuliah');
+        $userId = Auth::id();
+
+        // Check if any administrasi records exist for the user
+        $administrasiExists = Administrasi::where('user_id', $userId)->exists();
+
+        // Check if there are any records with status not "Approve" or "Rejected"
+        $administrasiPending = Administrasi::where('user_id', $userId)
+            ->whereNotIn('status', ['approve', 'rejected'])
+            ->exists();
+
+        // Check if there are any records with status3 as "Waiting"
+        $ekuivalensiPending = Administrasi::where('user_id', $userId)
+            ->where('status3', 'waiting')
+            ->exists();
+
+        // Determine if the form can be submitted
+        $canSubmitForm = $administrasiExists && !($administrasiPending || $ekuivalensiPending);
+
+        return view('user.mata_kuliah', compact('administrasiExists', 'administrasiPending', 'ekuivalensiPending', 'canSubmitForm'));
     }
     public function show($id)
     {
@@ -111,6 +136,7 @@ class IndexController extends Controller
             'semester' => 'required|string',
             'nilai_ipk' => 'required|string',
             'dosen_wali' => 'required|string',
+            'program_mbkm' => 'required|string',
             'transkrip_nilai' => 'required|mimes:pdf|max:2048',
         ]);
 
@@ -123,9 +149,14 @@ class IndexController extends Controller
             'semester' => $request->input('semester'),
             'nilai_ipk' => $request->input('nilai_ipk'),
             'dosen_wali' => $request->input('dosen_wali'),
+            'program_mbkm' => $request->input('program_mbkm'),
             'transkrip_nilai' => $nama_file,
+            'nama_penyelenggara' => 'null',
+            'no_hp' => '0',
+            'deskripsi_kegiatan' => 'null',
+            'capaian_pembelajaran' => 'null',
             'status' => 'waiting',
-            'status2' => 'null',
+            'status2' => 'waiting',
             'status3' => 'null',
             'status4' => 'waiting',
             'user_id' => Auth::id(), // Set the user_id to the currently logged-in user's ID
@@ -134,27 +165,6 @@ class IndexController extends Controller
         $administrasi->save();
 
         return redirect('index/user/tambahsop')->with('success', 'Data Administrasi berhasil disimpan.');
-    }
-    public function storeProgramMbkm(Request $request)
-    {
-        $request->validate([
-            'program_mbkm' => 'required|string',
-        ]);
-
-        // Find the most recent Administrasi record for the logged-in user
-        $administrasi = Administrasi::where('user_id', Auth::id())
-            ->latest()
-            ->first();
-
-        if ($administrasi) {
-            $administrasi->program_mbkm = $request->input('program_mbkm');
-            $administrasi->status2 = 'waiting'; // Update status2 to 'waiting'
-            $administrasi->save();
-
-            return redirect()->route('user.pemilihankegiatan')->with('success', 'Program MBKM berhasil disimpan.');
-        }
-
-        return redirect()->route('user.pemilihankegiatan')->with('error', 'Tidak ada data administrasi yang ditemukan.');
     }
 
     public function storeMataKuliah(Request $request)
@@ -165,6 +175,10 @@ class IndexController extends Controller
             'mata_kuliah_3' => 'nullable|string',
             'mata_kuliah_4' => 'nullable|string',
             'mata_kuliah_5' => 'nullable|string',
+            'nama_penyelenggara' => 'required|string|max:255',
+            'no_hp' => 'required|string|max:15',
+            'deskripsi_kegiatan' => 'required|string',
+            'capaian_pembelajaran' => 'required|string',
         ]);
 
         // Find the most recent Administrasi record for the logged-in user
@@ -178,10 +192,14 @@ class IndexController extends Controller
             $administrasi->mata_kuliah_3 = $request->input('mata_kuliah_3');
             $administrasi->mata_kuliah_4 = $request->input('mata_kuliah_4');
             $administrasi->mata_kuliah_5 = $request->input('mata_kuliah_5');
+            $administrasi->nama_penyelenggara = $request->nama_penyelenggara;
+            $administrasi->no_hp = $request->no_hp;
+            $administrasi->deskripsi_kegiatan = $request->deskripsi_kegiatan;
+            $administrasi->capaian_pembelajaran = $request->capaian_pembelajaran;
             $administrasi->status3 = 'waiting'; // Update status3 to 'waiting'
             $administrasi->save();
 
-            return redirect()->route('user')->with('success', 'Mata Kuliah berhasil disimpan.');
+            return redirect()->route('user.status')->with('success', 'Mata Kuliah berhasil disimpan.');
         }
 
         return redirect()->route('user.status')->with('error', 'Tidak ada data administrasi yang ditemukan.');
@@ -455,19 +473,16 @@ class IndexController extends Controller
     {
         $administrasi = Administrasi::findOrFail($id);
 
-        // Update the note1 field
+        $administrasi = Administrasi::findOrFail($id);
 
-
-        // Check which button was pressed
-        if ($request->input('action') == 'approve') {
-            // Handle approve logic
-            $administrasi->status4 = 'approve';
-        } elseif ($request->input('action') == 'reject') {
-            // Handle reject logic
-            $administrasi->status4 = 'reject';
+        if ($request->action == 'approve') {
+            $administrasi->status4 = 'approved';
+        } elseif ($request->action == 'reject') {
+            $administrasi->status4 = 'rejected';
         }
 
         $administrasi->save();
+
 
         return redirect()->route('kaprodi.detail3', $id)->with('status', 'Update successful!');
     }
@@ -476,5 +491,121 @@ class IndexController extends Controller
         $administrasi = Administrasi::with('user')->findOrFail($id);
 
         return view('kaprodi.detail4', compact('administrasi'));
+    }
+    public function admin()
+    {
+        $programData = DB::table('administrasis')
+            ->select('program_mbkm', DB::raw('count(*) as total'))
+            ->groupBy('program_mbkm')
+            ->get();
+        // Initialize counters
+        $approvedCount = 0;
+        $waitingCount = 0;
+        $rejectedCount = 0;
+
+        // Retrieve all administrasi records
+        $administrasiRecords = Administrasi::all();
+
+        // Count each status occurrence
+        foreach ($administrasiRecords as $administrasi) {
+            if ($administrasi->status === 'approved') $approvedCount++;
+            if ($administrasi->status2 === 'approved') $approvedCount++;
+            if ($administrasi->status3 === 'approved') $approvedCount++;
+
+            if ($administrasi->status === 'waiting') $waitingCount++;
+            if ($administrasi->status2 === 'waiting') $waitingCount++;
+            if ($administrasi->status3 === 'waiting') $waitingCount++;
+
+            if ($administrasi->status === 'rejected') $rejectedCount++;
+            if ($administrasi->status2 === 'rejected') $rejectedCount++;
+            if ($administrasi->status3 === 'rejected') $rejectedCount++;
+        }
+
+        // Retrieve the administrasi records along with the related user data
+        $administrasiData = Administrasi::with('user')->get();
+
+        return view('admin.index', compact('administrasiData', 'approvedCount', 'waitingCount', 'rejectedCount', 'programData'));
+    }
+
+
+
+
+    // ADMIN
+    public function daftaruser()
+    {
+        // Fetch all users
+        $users = User::all();
+
+        // Pass the user data to the view
+        return view('admin.user', compact('users'));
+    }
+    public function create()
+    {
+        return view('admin.create_user');
+    }
+
+    public function store(Request $request)
+    {
+    
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+            'nim' => 'required|unique:users',
+        ]);
+
+        User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'nim' => $request->nim,
+            'role' => 'user', // Automatically assign 'user' role
+        ]);
+
+        return redirect()->route('daftaruser')->with('success', 'User berhasil ditambahkan.');
+    }
+    public function edit($id)
+    {
+        $user = User::findOrFail($id);
+        return view('admin.edit_user', compact('user'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
+            'nim' => 'nullable|integer|unique:users,nim,' . $user->id,
+            'role' => 'required|string',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->nim = $request->nim;
+        $user->role = $request->role;
+
+        if ($request->filled('password')) {
+            $user->password = Hash::make($request->password);
+        }
+
+        $user->save();
+
+        return redirect()->route('daftaruser')->with('success', 'User berhasil diupdate.');
+    }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Delete related administrasi records
+        $user->administrasis()->delete();
+
+        // Delete the user
+        $user->delete();
+
+        return redirect()->route('daftaruser')->with('success', 'User dan data administrasi terkait berhasil dihapus.');
     }
 }

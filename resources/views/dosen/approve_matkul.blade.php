@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    @if(Auth::user()->role == 'dosen')
+    @if(Auth::user()->role == 'dosen' || Auth::user()->role == 'admin')
         <div class="custom-buttons-container">
             <!-- Back button -->
         </div>
@@ -20,6 +20,7 @@
 <tbody>
    @foreach ($administrasiData as $index => $administrasi)
     @if ($administrasi->status3 === 'waiting')
+     @if(Auth::user()->role == 'admin' || ($administrasi->dosen_wali === Auth::user()->name && Auth::user()->role == 'dosen'))
             <tr>
                 <td>{{ $index + 1 }}</td> <!-- Sequential number -->
                 <td>{{ $administrasi->program_mbkm ?: 'Belum Terisi' }}</td>
@@ -31,10 +32,7 @@
                 </td>
             </tr>
             
- @else
- <tr>
-                <td>Empty</td> <!-- Sequential number -->
- </tr>
+@endif
  @endif
         @endforeach
 

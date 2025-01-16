@@ -53,9 +53,8 @@
 </thead>
 <tbody>
       @foreach ($administrasiData as $index => $administrasi)
-     @if(
-      
-        ($administrasi->status3 !== null && in_array($administrasi->status3, ['approve', 'rejected']))
+   @if(
+        ($administrasi->status4 !== null && in_array($administrasi->status, ['approve', 'rejected'])) 
     )
             <tr>
                 <td>{{ $index + 1 }}</td> <!-- Sequential number -->
@@ -68,7 +67,7 @@
                     @elseif($administrasi->status4 == 'null') status-waiting 
                     @elseif($administrasi->status4 == 'rejected') status-rejected 
                     @else status-unknown @endif">
-                    {{ $administrasi->status3 }}
+                    {{ $administrasi->status4 }}
                 </span>
             </td>
                 <td>

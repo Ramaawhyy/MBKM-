@@ -208,10 +208,13 @@
                 @endif
               </a>
               <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item"  href="{{ route('logout') }}" >
+                <a class="dropdown-item"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class="mdi mdi-logout text-primary"></i>
                   Logout
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
+                  @csrf
+                </form>
               </div>
         </div>
        

@@ -187,35 +187,15 @@
               </div>
             </li>
           </ul>
-          <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-            <span class="mdi mdi-menu"></span>
-          </button>
-          <ul class="navbar-nav navbar-nav-right">
-            <li class="nav-item nav-profile dropdown">
-              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-                @if(Auth::user()->role == 'user')
-                <span class="nav-profile-name">Unit Perusahaan</span>
-                @endif
-                @if(Auth::user()->role == 'admin')
-                <span class="nav-profile-name">Management Representative</span>
-                @endif
-                @if(Auth::user()->role == 'superadm')
-                <span class="nav-profile-name">Kaprodi</span>
-                @endif
-                @if(Auth::user()->role == 'dosen')
-                <span class="nav-profile-name">Dosen</span>
-                @endif
-              </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item"  href="{{ route('logout') }}" >
-                  <i class="mdi mdi-logout text-primary"></i>
-                  Logout
-                </a>
-              </div>
-        </div>
-       
-      </nav>
-      
+          <button class="btn btn-light" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+    <i class="mdi mdi-logout text-dark"></i> Logout
+</button>
+
+<!-- Hidden Logout Form -->
+<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+    @csrf
+</form>
+</nav>
       <!-- partial -->
       <div class="main-panel">
         <div class="content-wrapper">

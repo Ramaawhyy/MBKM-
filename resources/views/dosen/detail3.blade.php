@@ -10,6 +10,22 @@
         @csrf
         @method('POST')
 
+         <div class="mb-3">
+            <label for="semester" class="form-label">Nama Penyelenggara</label>
+            <input type="text" name="semester" value="{{ $administrasi->nama_penyelenggara }}" class="form-control" readonly>
+        </div>
+         <div class="mb-3">
+            <label for="semester" class="form-label">No HP</label>
+            <input type="text" name="semester" value="{{ $administrasi->no_hp }}" class="form-control" readonly>
+        </div>
+         <div class="mb-3">
+            <label for="semester" class="form-label">Deskripsi Kegiatan</label>
+            <input type="text" name="semester" value="{{ $administrasi->deskripsi_kegiatan }}" class="form-control" readonly>
+        </div>
+         <div class="mb-3">
+            <label for="semester" class="form-label">Capaian Pembelajaran</label>
+            <input type="text" name="semester" value="{{ $administrasi->capaian_pembelajaran }}" class="form-control" readonly>
+        </div>
         <!-- Semester -->
         <div class="mb-3">
             <label for="semester" class="form-label">Semester</label>

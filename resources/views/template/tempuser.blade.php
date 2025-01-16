@@ -58,15 +58,6 @@
         <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
         <span class="menu-title" style="color: black;">Administrasi</span>
     </a>
-
-
-    <a class="nav-link {{ request()->routeIs('user.pemilihankegiatan') ? 'active' : '' }}" href="{{ route('user.pemilihankegiatan') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
-        <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
-        <span class="menu-title" style="color: black;">Pemilihan Kegiatan</span>
-    </a>
-
-
-
     <a class="nav-link {{ request()->routeIs('user.matakuliah') ? 'active' : '' }}" href="{{ route('user.matakuliah') }}" style="background-color: white; text-decoration: none; color: black; border: none;">
         <i class="mdi mdi-view-quilt menu-icon" style="color: black;"></i>
         <span class="menu-title" style="color: black;">Mata Kuliah Ekivalensi</span>
@@ -231,11 +222,14 @@
                 <span class="nav-profile-name">Dosen</span>
                 @endif
               </a>
-              <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
-                <a class="dropdown-item"  href="{{ route('logout') }}" >
+             <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="profileDropdown">
+                <a class="dropdown-item"  href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                   <i class="mdi mdi-logout text-primary"></i>
                   Logout
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="GET" style="display: none;">
+                  @csrf
+                </form>
               </div>
         </div>
        

@@ -20,12 +20,29 @@
         <label for="dosen_wali" class="form-label">Dosen Wali</label>
         <input type="text" name="dosen_wali" value="{{ $administrasi->dosen_wali }}" class="form-control" readonly>
     </div>
-
-    <div class="mb-3">
+  <div class="mb-3">
         <label for="program_mbkm" class="form-label">Program MBKM</label>
         <input type="text" name="program_mbkm" value="{{ $administrasi->program_mbkm }}" class="form-control" readonly>
     </div>
 
+    <div class="mb-3">
+        <label for="program_mbkm" class="form-label"> Nama Penyelenggara</label>
+        <input type="text" name="nama_penyelenggara" value="{{ $administrasi->nama_penyelenggara }}" class="form-control" readonly>
+    </div>
+     <div class="mb-3">
+        <label for="program_mbkm" class="form-label"> No HP</label>
+        <input type="text" name="no_hp" value="{{ $administrasi->no_hp }}" class="form-control" readonly>
+    </div>
+    <div class="mb-3">
+        <label for="program_mbkm" class="form-label"> Deskripsi Kegiatan</label>
+       <textarea name="deskripsi_kegiatan" class="form-control" readonly>{{ $administrasi->deskripsi_kegiatan }}</textarea>
+    </div>
+    <div class="mb-3">
+        <label for="program_mbkm" class="form-label"> Capaian Pembelajaran</label>
+        <textarea name="capaian_pembelajaran" class="form-control" readonly>{{ $administrasi->capaian_pembelajaran }}</textarea>
+    </div>
+
+  
     <div class="mb-3">
         <label for="mata_kuliah" class="form-label">Mata Kuliah</label>
         <div class="d-flex flex-wrap gap-2">
@@ -43,11 +60,13 @@
         <textarea name="note3" class="form-control" readonly>{{ $administrasi->note3 }}</textarea>
     </div>
 
-    <!-- Buttons -->
-    <div class="d-flex justify-content-between mt-4">
-        <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
-        <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
-    </div>
+    <!-- Form for Approve/Reject -->
+    <form action="{{ route('kaprodi.updateDetail', $administrasi->id) }}" method="POST">
+        @csrf
+        <div class="d-flex justify-content-end gap-2 mt-4">
+            <button type="submit" name="action" value="reject" class="btn btn-danger">Reject</button>
+            <button type="submit" name="action" value="approve" class="btn btn-success">Approve</button>
+        </div>
     </form>
 
     <!-- Links for Transkrip Nilai -->
